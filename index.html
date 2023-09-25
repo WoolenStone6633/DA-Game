@@ -3,8 +3,29 @@
     <head>
         <title>Solitaire</title>
         <style type="text/css">
-
+        
         </style>
+    <script>
+        class Cards {
+            value;
+            suit = {
+                Hearts: 0,
+                Diamonds: 1,
+                Clubs: 2,
+                Spades: 3
+            }
+            constructor(value, suit){
+                this.value = value;
+                this.suit = suit;
+            }
+            get link() {
+                return (this.value+"_of_"+this.suit+".png")
+            }
+
+        }
+    </script>
+
+
     </head>
     <body>
         
