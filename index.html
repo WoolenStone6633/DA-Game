@@ -3,28 +3,58 @@
     <head>
         <title>Solitaire</title>
         <style type="text/css">
-#game_board {position:absolute; left: 11%; width:75%}
-#board {position:absolute; width:100%}
-#redo {position: absolute; opacity:0.9; left:1% ;width: 11.6%}
-#heart_back {position:absolute; opacity:0.7; left:56%; width:10%}
-#diamond_back {position:absolute; opacity:0.7; left:67%; width:10%}
-#club_back {position:absolute; opacity:0.7; left:78%; width:10%}
-#spade_back {position:absolute; opacity:0.7; left:89%; width:10%}
-/*.card {}*/
+#game_board {position:absolute; left: 11%; width:75%;}
+#board {position:absolute; width:100%; z-index:-2}
+#redo {position: absolute; opacity:0.9; left:1% ;width: 11.6%; z-index:-1}
+#heart_back {position:absolute; opacity:0.7; left:56%; width:10%; z-index:-1}
+#diamond_back {position:absolute; opacity:0.7; left:67%; width:10%; z-index:-1}
+#club_back {position:absolute; opacity:0.7; left:78%; width:10%; z-index:-1}
+#spade_back {position:absolute; opacity:0.7; left:89%; width:10%; z-index:-1}
+.card {z-index: 0}
 
         </style>
         <script>
-            function return_card_name() {
-                for (int i = 0; i < 52; i++) {
-                    let card = document.createElement("div");
-                    card.id = 
+            class Cards {
+                value;
+                suit = {
+                    Hearts: 0,
+                    Diamonds: 1,
+                    Clubs: 2,
+                    Spades: 3
+                }
+                constructor(value, suit){
+                    this.value = value;
+                    this.suit = suit;
+                }
+                get id() {
+                    return (this.value + "_of_" + this.suit)
+                }
+                get link() {
+                    return (this.value+"_of_"+this.suit+".png")
+                }
+                flip(){
+                    //Make the card flip no matter which side is showing
+                }
+    
+            }
+        </script>
+        <script>
+            function setGame() {
+                for (let suit = 0; suit < 4; suit++) {
+                    for (let value = 1; value <= 13; value++) {
+                        let card = new Cards(value, suit);
+                        let domCard = document.createElement("div");
+                        domCard.id = card.id;
+                        console.log("ran");
+                        /*Put 28 cards onthe playing table and 24 in the stack*/
+                        //document.getElementById("").append(card);
+                    }
                 }
             }
         </script>
     </head>
-    <body>
-        <div id="game_board"
-            onMouseOver="return_card_name();">
+    <body onload="setGame()">
+        <div id="game_board">
             <div id="board">
                 <img src="Board assets/Felt_table.jpg" alt="felt table" width="100%">
             </div>
@@ -43,6 +73,8 @@
             <div id="diamond_back">
                 <img src="Board assets/Diamond_Back.png" width="100%">
             </div>
+            <div id="stack"></div>
+            <div id="playing area"></div>
         </div>
     </body>
 </html>
