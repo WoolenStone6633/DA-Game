@@ -58,7 +58,6 @@
         </script>
         <script>
             function setGame() {
-                
                 for (let suit = 0; suit < 4; suit++) {
                     for (let value = 1; value <= 13; value++) {
                         let card = new Cards(value, suit);
@@ -70,8 +69,19 @@
                 }
             }
         </script>
+
+        <script>
+            function fisher_yates(list){
+            for (let i = list.length; i > 0; i--) {
+                let temp = Math.floor(Math.random() * (i + 1));
+                [list[temp], list[i]] = [list[i], list[temp]];
+            }
+            document.getElementById("stack").innerHTML = lsit;
+            }
+         </script>
+
     </head>
-    <body onload="setGame()">
+    <body onload="setGame()" onload="fusher_yates(lsit(1,2,3,4))">
         <div id="game_board">
             <div id="board">
                 <img src="Board assets/Felt_table.jpg" alt="felt table" width="100%">
