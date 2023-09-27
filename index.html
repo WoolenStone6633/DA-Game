@@ -12,7 +12,7 @@
 #spade_back {position:absolute; opacity:0.7; left:89%; width:10%; z-index:-1}
 .card {z-index: 0}
         </style>
-        <script>
+        <script> //Class to define a playing card and it's properties
             class Cards {
                 value;
                 suit = {
@@ -25,30 +25,36 @@
                     this.value = value;
                     this.suit = suit;
                 }
+                get value() {
+                    return this.value;
+                }
+                get suit() {
+                    return this.suit;
+                }
                 get id() {
-                    return (this.value + "_of_" + this.suit)
+                   return  this.value + "_of_" + this.suit;
                 }
                 get link() {
-                    return (this.value+"_of_"+this.suit+".png")
+                    return this.value + "_of_" + this.suit + ".png";
                 }
                 flip(){
                     //Make the card flip no matter which side is showing
                 }
     
             }
-            var column0 = new List();
-            var column1 = new List();
-            var column2 = new List();
-            var column3 = new List();
-            var column4 = new List();
-            var column5 = new List();
-            var column6 = new List();
-            var heartStack = new List();
-            var diamondStack = new List();
-            var clubStack = new List();
-            var spadeStack = new List();
-            var resetStack = new List();
-            var discardStack = new List();
+            var column0 = [];
+            var column1 = [];
+            var column2 = [];
+            var column3 = [];
+            var column4 = [];
+            var column5 = [];
+            var column6 = [];
+            var heartStack = [];
+            var diamondStack = [];
+            var clubStack = [];
+            var spadeStack = [];
+            var resetStack = [];
+            var discardStack = [];
             
             function moveCard(moveFrom, moveTo){
                 moveFrom.push(moveTo.pop());
@@ -56,32 +62,36 @@
                 return;
             }
         </script>
-        <script>
+
+        <script> //For setting up the board. Placing cards, randomizing their order, etc.
             function setGame() {
+                let initialStack = []
                 for (let suit = 0; suit < 4; suit++) {
                     for (let value = 1; value <= 13; value++) {
                         let card = new Cards(value, suit);
-                        let domCard = document.createElement("div");
-                        domCard.id = card.id;
+                        initialStack.push(card);
+                        /*let domCard = document.createElement("div");
+                        domCard.id = card.id;*/
                         /*Put 28 cards onthe playing table and 24 in the stack*/
                         //document.getElementById("").append(card);
                     }
                 }
+                randomizer(initialStack); //The code commented out right below lets you see the randomized output of the randomizer funciton
+                /*for (let i = 0; i < initialStack.length; i++)
+                    console.log(initialStack[i].id);*/
             }
         </script>
 
-        <script>
-            function fisher_yates(list){
-            for (let i = list.length; i > 0; i--) {
-                let temp = Math.floor(Math.random() * (i + 1));
-                [list[temp], list[i]] = [list[i], list[temp]];
-            }
-            document.getElementById("stack").innerHTML = lsit;
+        <script> //Script for randomizing the order of any array
+            function randomizer(array){
+                for (let i = 0; i < array.length; i++) {
+                    let temp = Math.floor(Math.random() * (array.length));
+                    [array[temp], array[i]] = [array[i], array[temp]];
+                }
             }
          </script>
-
     </head>
-    <body onload="setGame()" onload="fusher_yates(lsit(1,2,3,4))">
+    <body onload="setGame()">
         <div id="game_board">
             <div id="board">
                 <img src="Board assets/Felt_table.jpg" alt="felt table" width="100%">
