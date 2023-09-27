@@ -10,7 +10,7 @@
 #diamond_back {position:absolute; opacity:0.7; left:67%; width:10%; z-index:-1}
 #club_back {position:absolute; opacity:0.7; left:78%; width:10%; z-index:-1}
 #spade_back {position:absolute; opacity:0.7; left:89%; width:10%; z-index:-1}
-.card {z-index: 0}
+.card {position:absolute; z-index: 0}
         </style>
         <script> //Class to define a playing card and it's properties
             class Cards {
@@ -70,15 +70,23 @@
                     for (let value = 1; value <= 13; value++) {
                         let card = new Cards(value, suit);
                         initialStack.push(card);
-                        /*let domCard = document.createElement("div");
-                        domCard.id = card.id;*/
-                        /*Put 28 cards onthe playing table and 24 in the stack*/
-                        //document.getElementById("").append(card);
                     }
                 }
                 randomizer(initialStack); //The code commented out right below lets you see the randomized output of the randomizer funciton
                 /*for (let i = 0; i < initialStack.length; i++)
                     console.log(initialStack[i].id);*/
+
+                //This is what I want you to look at. It adds divs to the web page. I know it's not using the lists but we can easily add it to
+                for (let i = (initialStack.length -1); i >= 28; i--) { //Takes the last element on the array and puts it on the board
+                    let domCard = document.createElement("div");
+                    domCard.id = initialStack[i].id;
+                    domCard.classList.add("card");
+                    document.getElementById("stack").append(domCard);
+
+                    let img = document.createElement("img");
+                    img.src = initialStack[i].link;
+                    document.getElementById(initialStack[i].id).appendChild(img);
+                }
             }
         </script>
 
