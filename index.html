@@ -10,6 +10,13 @@
 #diamond_back {position:absolute; opacity:0.7; left:67%; width:10%; z-index:-1}
 #club_back {position:absolute; opacity:0.7; left:78%; width:10%; z-index:-1}
 #spade_back {position:absolute; opacity:0.7; left:89%; width:10%; z-index:-1}
+#column0 {position:absolute; left:1%; width: 10%}
+#column1 {position:absolute; left:12%; width: 10%}
+#column2 {position:absolute; left:23%; width: 10%}
+#column3 {position:absolute; left:34%; width: 10%}
+#column4 {position:absolute; left:45%; width: 10%}
+#column5 {position:absolute; left:56%; width: 10%}
+#column6 {position:absolute; left:67%; width: 10%}
 .card {position:absolute; z-index: 0}
         </style>
         <script> //Class to define a playing card and it's properties
@@ -40,7 +47,6 @@
                 flip(){
                     //Make the card flip no matter which side is showing
                 }
-    
             }
             var column0 = [];
             var column1 = [];
@@ -76,7 +82,6 @@
                 /*for (let i = 0; i < initialStack.length; i++)
                     console.log(initialStack[i].id);*/
 
-                //This is what I want you to look at. It adds divs to the web page. I know it's not using the lists but we can easily add it to
                 for (let i = (initialStack.length -1); i >= 28; i--) { //Takes the last element on the array and puts it on the board
                     let domCard = document.createElement("div");
                     domCard.id = initialStack[i].id;
