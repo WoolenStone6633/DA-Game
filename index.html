@@ -12,27 +12,26 @@
 #spade_back {position:absolute; opacity:0.7; left:89%; width:10%}
 
         </style>
-    <script>
-        class Cards {
-            value;
-            suit = {
-                Hearts: 0,
-                Diamonds: 1,
-                Clubs: 2,
-                Spades: 3
-            }
-            constructor(value, suit){
-                this.value = value;
-                this.suit = suit;
-            }
-            get link() {
                 return (this.value+"_of_"+this.suit+".png")
+        <script>
+            class Cards {
+                value;
+                suit = {
+                    Hearts: 0,
+                    Diamonds: 1,
+                    Clubs: 2,
+                    Spades: 3
+                }
+                constructor(value, suit){
+                    this.value = value;
+                    this.suit = suit;
+                }
+                get link() {
+                    return (this.value+"_of_"+this.suit+".png")
+                }
+
             }
-
-        }
-    </script>
-
-
+        </script>
     </head>
     <body>
         <div id="game_board">
