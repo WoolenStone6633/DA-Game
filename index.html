@@ -90,7 +90,7 @@
                     console.log(initialStack[i].id);*/
 
                 let temp = 0;
-                for (let i = (initialStack.length -1); i >= 0; i--) { //Takes the last element on the array and puts it on the board
+                /*for (let i = (initialStack.length -1); i >= 0; i--) { //Takes the last element on the array and puts it on the board
                     if (i >= 28) {
                         placeCard(initialStack[i], "stack");
                     } else if (i == 27) {
@@ -134,6 +134,26 @@
                         placeCard(initialStack[i], "column6");
                         shiftDown(initialStack[i].id, temp);
                         temp += 3.3;
+                    }
+                }*/
+
+                for (let i = (initialStack.length -1); i >= 0; i--) { //Takes the last element on the array and puts it on the board
+                    if (i >= 28) {
+                        placeCard(initialStack[i], "stack");
+                    } else if (i == 27) {
+                        placeCard(initialStack[i], "column0");
+                    } else if (i >= 25) {
+                        placeCard(initialStack[i], "column1");
+                    } else if (i >= 22) {
+                        placeCard(initialStack[i], "column2");
+                    } else if (i >= 18) {
+                        placeCard(initialStack[i], "column3");
+                    } else if (i >= 13) {
+                        placeCard(initialStack[i], "column4");
+                    } else if (i >= 7) {
+                        placeCard(initialStack[i], "column5");
+                    } else if (i >= 0) {
+                        placeCard(initialStack[i], "column6");
                     }
                 }
             }
