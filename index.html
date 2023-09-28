@@ -151,7 +151,19 @@
             }
         </script>
 
-        <script>
+        <script> //Places a card in the column. Places it in the correct position away from the other card under it
+            function addToCollumn(card, location) {
+                let shift = 3.3;
+                if (document.getElementById(location).childNodes.length == 0){
+                    placeCard(card, location);
+                } else {
+                    placeCard(card, location);
+                    shiftDown(card.id, (Math.ceil(parseInt(window.getComputedStyle(document.getElementById(location).childNodes[document.getElementById(location).childNodes.length - 2])["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 10000) + shift * 100) / 100);
+                }
+            }
+        </script>
+
+        <script> //For moving a card down a specific amount
             function shiftDown(item, amount) {
                 document.getElementById(item).style.top = (Math.ceil(parseInt(window.getComputedStyle(document.getElementById(item))["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 100) + amount) + "%";
             }
