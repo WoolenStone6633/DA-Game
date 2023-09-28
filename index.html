@@ -155,6 +155,14 @@
         </script>
 
         <script>
+            function addToCollumn(card, location) {
+                placeCard(card, locatoin);
+                document.getElementById(card.id)
+                shiftDown(card, 3.3);
+            }
+        </script>
+
+        <script>
             function shiftDown(item, amount) {
                 document.getElementById(item).style.top = (Math.ceil(parseInt(window.getComputedStyle(document.getElementById(item))["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 100) + amount) + "%";
             }
