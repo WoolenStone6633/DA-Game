@@ -26,11 +26,12 @@
             class Cards {
                 value;
                 suit;
-                flipped = false;
+                flipFlag;
 
                 constructor(value, suit){
                     this.value = value;
                     this.suit = suit;
+                    this.flipFlag = false;
                 }
                 get value() {
                     return this.value;
@@ -42,12 +43,10 @@
                    return  this.value + "_of_" + this.suit;
                 }
                 get link() {
-                    /*if(flipped==true){
+                    if(this.flipFlag){
                         return "Playing Cards/Back.png";
                     }
-                    else{*/
-                        return "Playing Cards/" + this.value + "_of_" + this.getSuit(this.suit) + ".png";
-                    //}
+                    return "Playing Cards/" + this.value + "_of_" + this.getSuit(this.suit) + ".png";
                 }
                 getSuit(suit) {
                     if (suit == 0) {
@@ -60,9 +59,8 @@
                         return "spades";
                     }
                 }
-                
                 flip(){
-                    flipped = !flipped;
+                    this.flipFlag = !this.flipFlag;
                 }
             }
             var column0 = [];
@@ -94,58 +92,48 @@
                         initialStack.push(card);
                     }
                 }
-                randomizer(initialStack); //The code commented out right below lets you see the randomized output of the randomizer funciton
-                /*for (let i = 0; i < initialStack.length; i++)
-                    console.log(initialStack[i].id);*/
+                //Randomizes the order of the cards
+                randomizer(initialStack);
 
+                //Places the cards on the board in their correct initial spot
                 let temp = 0;
-                for (let i = (initialStack.length -1); i >= 0; i--) { //Takes the last element on the array and puts it on the board
+                for (let i = (initialStack.length -1); i >= 0; i--) {
                     if (i >= 28) {
                         placeCard(initialStack[i], "stack");
                     } else if (i == 27) {
                         placeCard(initialStack[i], "column0");
                     } else if (i >= 25) {
-                        placeCard(initialStack[i], "column1");
-                        shiftDown(initialStack[i].id, temp);
-                        temp += 3.3;
+                        if(i != 26){
+                            initialStack[i].flip();
+                        }
+                        addToColumn(initialStack[i], "column1");
                     } else if (i >= 22) {
-                        if (i == 24) {
-                            temp = 0;
+                        if(i != 24){
+                            initialStack[i].flip();
                         }
-                        placeCard(initialStack[i], "column2");
-                        shiftDown(initialStack[i].id, temp);
-                        temp += 3.3;
+                        addToColumn(initialStack[i], "column2");
                     } else if (i >= 18) {
-                        if (i == 21) {
-                            temp = 0;
+                        if(i != 21){
+                            initialStack[i].flip();
                         }
-                        placeCard(initialStack[i], "column3");
-                        shiftDown(initialStack[i].id, temp);
-                        temp += 3.3;
+                        addToColumn(initialStack[i], "column3");
                     } else if (i >= 13) {
-                        if (i == 17) {
-                            temp = 0;
+                        if(i != 17){
+                            initialStack[i].flip();
                         }
-                        placeCard(initialStack[i], "column4");
-                        shiftDown(initialStack[i].id, temp);
-                        temp += 3.3;
+                        addToColumn(initialStack[i], "column4");
                     } else if (i >= 7) {
-                        if (i == 12) {
-                            temp = 0;
+                        if(i != 12){
+                            initialStack[i].flip();
                         }
-                        placeCard(initialStack[i], "column5");
-                        shiftDown(initialStack[i].id, temp);
-                        temp += 3.3;
+                        addToColumn(initialStack[i], "column5");
                     } else if (i >= 0) {
-                        if (i == 6) {
-                            temp = 0;
+                        if(i != 6){
+                            initialStack[i].flip();
                         }
-                        placeCard(initialStack[i], "column6");
-                        shiftDown(initialStack[i].id, temp);
-                        temp += 3.3;
+                        addToColumn(initialStack[i], "column6");
                     }
                 }
-                //When adding a new card to the stack, take the top% parameter of the last child node in the column and add 3.3 to it
             }
         </script>
 
