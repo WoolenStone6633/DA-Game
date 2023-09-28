@@ -153,7 +153,11 @@
                     } else if (i >= 7) {
                         placeCard(initialStack[i], "column5");
                     } else if (i >= 0) {
-                        placeCard(initialStack[i], "column6");
+                        if (document.getElementById("column6").childNodes.length == 0) {
+                            placeCard(initialStack[i], "column6");
+                        } else {
+                            placeCard(initialStack[i], initialStack[i + 1].id)
+                        }
                     }
                 }
             }
