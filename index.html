@@ -85,66 +85,34 @@
                         initialStack.push(card);
                     }
                 }
-                randomizer(initialStack); //The code commented out right below lets you see the randomized output of the randomizer funciton
-                /*for (let i = 0; i < initialStack.length; i++)
-                    console.log(initialStack[i].id);*/
+                //Randomizes the order of the cards
+                randomizer(initialStack);
 
+                //Places the cards on the board in their correct initial spot
                 let temp = 0;
-                for (let i = (initialStack.length -1); i >= 0; i--) { //Takes the last element on the array and puts it on the board
+                for (let i = (initialStack.length -1); i >= 0; i--) {
                     if (i >= 28) {
                         placeCard(initialStack[i], "stack");
                     } else if (i == 27) {
                         placeCard(initialStack[i], "column0");
                     } else if (i >= 25) {
-                        placeCard(initialStack[i], "column1");
-                        shiftDown(initialStack[i].id, temp);
-                        temp += 3.3;
+                        addToCollumn(initialStack[i], "column1");
                     } else if (i >= 22) {
-                        if (i == 24) {
-                            temp = 0;
-                        }
-                        placeCard(initialStack[i], "column2");
-                        shiftDown(initialStack[i].id, temp);
-                        temp += 3.3;
+                        addToCollumn(initialStack[i], "column2");
                     } else if (i >= 18) {
-                        if (i == 21) {
-                            temp = 0;
-                        }
-                        placeCard(initialStack[i], "column3");
-                        shiftDown(initialStack[i].id, temp);
-                        temp += 3.3;
+                        addToCollumn(initialStack[i], "column3");
                     } else if (i >= 13) {
-                        if (i == 17) {
-                            temp = 0;
-                        }
-                        placeCard(initialStack[i], "column4");
-                        shiftDown(initialStack[i].id, temp);
-                        temp += 3.3;
+                        addToCollumn(initialStack[i], "column4");
                     } else if (i >= 7) {
-                        if (i == 12) {
-                            temp = 0;
-                        }
-                        placeCard(initialStack[i], "column5");
-                        shiftDown(initialStack[i].id, temp);
-                        temp += 3.3;
+                        addToCollumn(initialStack[i], "column5");
                     } else if (i >= 0) {
-                        if (i == 6) {
-                            temp = 0;
-                        }
-                        if (i == 0) {
-                            addToCollumn(initialStack[i], "column6");
-                        } else {
-                            placeCard(initialStack[i], "column6");
-                            shiftDown(initialStack[i].id, temp);
-                            temp += 3.3;
-                        }
+                        addToCollumn(initialStack[i], "column6");
                     }
                 }
-                //When adding a new card to the stack, take the top% parameter of the last child node in the column and add 3.3 to it
             }
         </script>
 
-        <script>
+        <script>  //Places a card on the board given a card object and the div we want to move it to
             function placeCard(card, locatoin){
                 let domCard = document.createElement("div");
                 domCard.id = card.id;
@@ -158,16 +126,19 @@
             }
         </script>
 
-        <script>
+        <script> //Places a card in the column. Places it in the correct position away from the other card under it
             function addToCollumn(card, location) {
-                placeCard(card, location);
-                console.log(document.getElementById(location).childNodes[document.getElementById(location).childNodes.length].id);
-                console.log(Math.ceil(parseInt(window.getComputedStyle(document.getElementById(location).childNodes.id)["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 100) + 3.3);
-                shiftDown(card, Math.ceil(parseInt(window.getComputedStyle(document.getElementById(document.getElementById(document.getElementById(locatoin).childNodes.id)))["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 100) + 3.3);
+                let shift = 3.3;
+                if (document.getElementById(location).childNodes.length == 0){
+                    placeCard(card, location);
+                } else {
+                    placeCard(card, location);
+                    shiftDown(card.id, (Math.ceil(parseInt(window.getComputedStyle(document.getElementById(location).childNodes[document.getElementById(location).childNodes.length - 2])["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 10000) + shift * 100) / 100);
+                }
             }
         </script>
 
-        <script>
+        <script> //For moving a card down a specific amount
             function shiftDown(item, amount) {
                 document.getElementById(item).style.top = (Math.ceil(parseInt(window.getComputedStyle(document.getElementById(item))["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 100) + amount) + "%";
             }
