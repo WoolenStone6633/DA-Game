@@ -131,9 +131,13 @@
                         if (i == 6) {
                             temp = 0;
                         }
-                        placeCard(initialStack[i], "column6");
-                        shiftDown(initialStack[i].id, temp);
-                        temp += 3.3;
+                        if (i == 0) {
+                            addToCollumn(initialStack[i], "column6");
+                        } else {
+                            placeCard(initialStack[i], "column6");
+                            shiftDown(initialStack[i].id, temp);
+                            temp += 3.3;
+                        }
                     }
                 }
                 //When adding a new card to the stack, take the top% parameter of the last child node in the column and add 3.3 to it
@@ -156,9 +160,10 @@
 
         <script>
             function addToCollumn(card, location) {
-                placeCard(card, locatoin);
-                document.getElementById(card.id)
-                shiftDown(card, 3.3);
+                placeCard(card, location);
+                console.log(document.getElementById(location).childNodes[document.getElementById(location).childNodes.length].id);
+                console.log(Math.ceil(parseInt(window.getComputedStyle(document.getElementById(location).childNodes.id)["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 100) + 3.3);
+                shiftDown(card, Math.ceil(parseInt(window.getComputedStyle(document.getElementById(document.getElementById(document.getElementById(locatoin).childNodes.id)))["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 100) + 3.3);
             }
         </script>
 
