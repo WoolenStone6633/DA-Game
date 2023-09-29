@@ -19,6 +19,7 @@
         #column5 {position:absolute; left:73%; top:25%; width:100%; height: 100%}
         #column6 {position:absolute; left:87%; top:25%; width:100%; height: 100%}
         .card {position:absolute; width:10.4%; z-index:0}
+        .highlight{border:5px; border-color: white;}
         </style>
 
 
@@ -62,24 +63,6 @@
                 flip(){
                     this.flipFlag = !this.flipFlag;
                 }
-            }
-            var column0 = [];
-            var column1 = [];
-            var column2 = [];
-            var column3 = [];
-            var column4 = [];
-            var column5 = [];
-            var column6 = [];
-            var heartStack = [];
-            var diamondStack = [];
-            var clubStack = [];
-            var spadeStack = [];
-            var resetStack = [];
-            var discardStack = [];
-            
-            function moveCard(moveFrom, moveTo){
-                moveFrom.push(moveTo.pop());
-                return;
             }
         </script>
 
@@ -137,6 +120,22 @@
                 }
             }
         </script>
+
+        <script>//base for clicking on a card
+            let firstClickFlag = false;
+            let moving;
+            function clickHandler(element){
+                 if(!firstClickFlag){
+                    element.classList.toggle("highlight")
+                    moving = element;
+                 }
+                 else{
+                    addToColumn()
+                }
+                
+            }
+        </script>
+
 
         <script>
             function placeCard(card, location){
