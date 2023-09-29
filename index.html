@@ -99,36 +99,37 @@
                 let temp = 0;
                 for (let i = (initialStack.length -1); i >= 0; i--) {
                     if (i >= 28) {
+                        initialStack[i].flip();
                         placeCard(initialStack[i], "stack");
                     } else if (i == 27) {
                         placeCard(initialStack[i], "column0");
                     } else if (i >= 25) {
-                        if(i != 26){
+                        if(i != 25){
                             initialStack[i].flip();
                         }
                         addToColumn(initialStack[i], "column1");
                     } else if (i >= 22) {
-                        if(i != 24){
+                        if(i != 22){
                             initialStack[i].flip();
                         }
                         addToColumn(initialStack[i], "column2");
                     } else if (i >= 18) {
-                        if(i != 21){
+                        if(i != 18){
                             initialStack[i].flip();
                         }
                         addToColumn(initialStack[i], "column3");
                     } else if (i >= 13) {
-                        if(i != 17){
+                        if(i != 13){
                             initialStack[i].flip();
                         }
                         addToColumn(initialStack[i], "column4");
                     } else if (i >= 7) {
-                        if(i != 12){
+                        if(i != 7){
                             initialStack[i].flip();
                         }
                         addToColumn(initialStack[i], "column5");
                     } else if (i >= 0) {
-                        if(i != 6){
+                        if(i != 0){
                             initialStack[i].flip();
                         }
                         addToColumn(initialStack[i], "column6");
@@ -152,7 +153,7 @@
         </script>
 
         <script> //Places a card in the column. Places it in the correct position away from the other card under it
-            function addToCollumn(card, location) {
+            function addToColumn(card, location) {
                 let shift = 3.3;
                 if (document.getElementById(location).childNodes.length == 0){
                     placeCard(card, location);
