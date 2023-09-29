@@ -139,16 +139,19 @@
         </script>
 
         <script>
-            function placeCard(card, location){
-                let domCard = document.createElement("div");
-                domCard.id = card.id;
-                domCard.classList.add("card");
-                document.getElementById(location).append(domCard);
+            function canPlace(cardTop, cardBottom) {
+                let tempSuit;  //This makes it so we are checking for the same suit as the cardBottom suit
+                if (cardTop.suit <= 1) {  //if 1 or 0 then add two to make it either 3 or 2
+                    tempSuit = cardTop.suit + 2;
+                } else {
+                    tempSuit = cardTop.suit - 2;  //if 2 or 3 then subtract 2 to make it either 0 or 1
+                }
 
-                let img = document.createElement("img");
-                img.src = card.link;
-                img.style.width = "100%";
-                document.getElementById(card.id).appendChild(img);
+                if (cardTop.value + 1 == cardBottom.value && tempSuit == cardBottom.suit) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         </script>
 
@@ -161,6 +164,20 @@
                     placeCard(card, location);
                     shiftDown(card.id, (Math.ceil(parseInt(window.getComputedStyle(document.getElementById(location).childNodes[document.getElementById(location).childNodes.length - 2])["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 10000) + shift * 100) / 100);
                 }
+            }
+        </script>
+
+        <script>
+            function placeCard(card, location){
+                let domCard = document.createElement("div");
+                domCard.id = card.id;
+                domCard.classList.add("card");
+                document.getElementById(location).append(domCard);
+
+                let img = document.createElement("img");
+                img.src = card.link;
+                img.style.width = "100%";
+                document.getElementById(card.id).appendChild(img);
             }
         </script>
 
@@ -178,6 +195,7 @@
                 }
             }
          </script>
+
     </head>
     <body onload="setGame()">
         <div id="game_board">
