@@ -135,6 +135,15 @@
                         addToColumn(initialStack[i], "column6");
                     }
                 }
+                whereCanPlace(initialStack[3]);
+            }
+        </script>
+
+        <script>
+            function whereCanPlace(card) {
+                for (let i = 0; i < 7; i++) {
+                    console.log(document.getElementById("column" + i).lastChild);
+                }
             }
         </script>
 
@@ -171,6 +180,7 @@
             function placeCard(card, location){
                 let domCard = document.createElement("div");
                 domCard.id = card.id;
+                //domCard
                 domCard.classList.add("card");
                 document.getElementById(location).append(domCard);
 
