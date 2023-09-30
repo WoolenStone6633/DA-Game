@@ -115,6 +115,7 @@ function clickHandler(){
     
 }
 
+//returns an array of div ids where the card can be placed. The array will be empty if the card can not be placed anywhere
 function whereCanPlace(card) {
     let placeArray = [];  //array of divs
 
@@ -150,12 +151,14 @@ function whereCanPlace(card) {
     }
 }
 
+//returns a Cards object from the specified div
 function getCardObj(cardDiv) {
     let cardObj = JSON.parse(cardDiv.firstChild.innerText);
     cardObj.__proto__ = Cards.prototype;
     return cardObj;
 }
 
+//returns boolean variable. Needs Cards objects to be passed as parameters
 function canPlaceColumn(cardTop, cardBottom) {
     let tempSuit;  //This makes it so we are checking for the same suit as the cardBottom suit
     if (cardTop.suit <= 1) {  //if 1 or 0 then add two to make it either 3 or 2
@@ -171,6 +174,7 @@ function canPlaceColumn(cardTop, cardBottom) {
     }
 }
 
+//returns boolean variable. Needs Cards objects to be passes as parameters
 function canPlaceFoundation(cardTop, cardBottom) {
     let tempSuit;  //This makes it so we are checking for the same suit as the cardBottom suit
     if (cardTop.value - 1 == cardBottom.value && cardTop.suit == cardBottom.suit) {
@@ -191,13 +195,14 @@ function addToColumn(card, location) {
     }
 }
 
-function placeCard(card, location){
+//creates a div at a specified locatoin. Requires Cards object and the div id
+function placeCard(card, locationId){
 
     let domCard = document.createElement("div");
     domCard.id = card.id;
     domCard.classList.add("card");
-    document.getElementById(location).append(domCard);
-    domCard.innerHTML = location;
+    document.getElementById(locationId).append(domCard);
+    domCard.innerHTML = locationId;
 
     let cardObj = document.createElement("span");
     cardObj.style.display = "none";
