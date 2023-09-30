@@ -100,12 +100,12 @@ for (let suit = 0; suit < 4; suit++) {
 
 //base for clicking on a card
 let firstClickFlag = false;
-var moving;
+var movingDiv;
 function clickHandler(){
     
     if(!firstClickFlag){//first card clicked, highlights it
         //this.classList.toggle("highlight")
-        moving = this;
+        movingDiv = this;
         firstClickFlag = !firstClickFlag;
 
         //Sorry for butting into your code, but the getCardObj won't work if the first elememt of the div is anything other than the span
@@ -131,8 +131,9 @@ function clickHandler(){
 
         //Hey, I wanted to take a look at this to see if I could help any here as well. Hopefully this helps. Message me with any questions you have
         //Removes the unique card's div then adds it back to the specified column or foundation
-        removeCard(this);
-        addToColumn(getCardObj(moving), "column3");
+        let temp = movingDiv
+        removeCard(movingDiv);
+        addToColumn(getCardObj(temp), document.getElementById(this.id).parentNode.id);
         firstClickFlag = !firstClickFlag;
     }
     
@@ -248,8 +249,8 @@ function placeCard(card, locationId){
 }
 
 //removes the card div given a card object
-function removeCard(card) {
-    document.getElementById(card.id).remove();
+function removeCard(cardDiv) {
+    document.getElementById(cardDiv.id).remove();
 }
 
  //For moving a card down a specific amount
