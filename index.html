@@ -142,7 +142,7 @@
             function whereCanPlace(card) {
                 let placeArray = [];  //array of divs
 
-                //Bellow if statements are for the card foundations at the top right
+                //Bellow if statements are for the card foundations at the top right of the board
                 if (document.getElementById("heart_back").lastChild.id == undefined && card.id == "1_of_0") { //for aces
                     placeArray.push(document.getElementById("heart_back").id);
                 } else if (document.getElementById("diamond_back").lastChild.id == undefined && card.id == "1_of_1") {
