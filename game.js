@@ -3,11 +3,16 @@ class Cards {
     value;
     suit;
     flipFlag;
+    spot = " ";
 
     constructor(value, suit){
         this.value = value;
         this.suit = suit;
         this.flipFlag = false;
+        this.spot = " ";
+    }
+    set spot(location) {
+        this.spot = location;
     }
     get value() {
         return this.value;
@@ -39,9 +44,8 @@ class Cards {
         this.flipFlag = !this.flipFlag;
     }
 }
-        
-        
-    //For setting up the board. Placing cards, randomizing their order, etc.
+
+//For setting up the board. Placing cards, randomizing their order, etc.
 function setGame() {
 let initialStack = []
 for (let suit = 0; suit < 4; suit++) {
@@ -54,7 +58,6 @@ for (let suit = 0; suit < 4; suit++) {
     randomizer(initialStack);
 
     //Places the cards on the board in their correct initial spot
-    let temp = 0;
     for (let i = (initialStack.length -1); i >= 0; i--) {
         if (i >= 28) {
             initialStack[i].flip();
@@ -98,16 +101,16 @@ for (let suit = 0; suit < 4; suit++) {
 let firstClickFlag = false;
 var moving;
 function clickHandler(){
-        if(!firstClickFlag){//first card clicked, highlights it
+    
+    if(!firstClickFlag){//first card clicked, highlights it
         this.classList.toggle("highlight")
-        let moving = getCardObj(this);
+        moving = this;
         firstClickFlag = !firstClickFlag;
-        }
-        else{
-        let temp = this;
-        if(temp.parentNode)
-        location = 
-        addToColumn(moving,)
+    }
+    else{
+        console.log(moving, this);
+        document.getElementById("column3").append(moving);
+        firstClickFlag = !firstClickFlag;
     }
     
 }
@@ -169,13 +172,15 @@ function canPlaceColumn(cardTop, cardBottom) {
 }
 
 function canPlaceFoundation(cardTop, cardBottom) {
-let tempSuit;  //This makes it so we are checking for the same suit as the cardBottom suit
-if (cardTop.value - 1 == cardBottom.value && cardTop.suit == cardBottom.suit) {
-return true;
-} else {
-return false;
+    let tempSuit;  //This makes it so we are checking for the same suit as the cardBottom suit
+    if (cardTop.value - 1 == cardBottom.value && cardTop.suit == cardBottom.suit) {
+        return true;
+    } else {
+        return false;
+    }
 }
-} //Places a card in the column. Places it in the correct position away from the other card under it
+
+//Places a card in the column. Places it in the correct position away from the other card under it
 function addToColumn(card, location) {
     let shift = 3.3;
     if (document.getElementById(location).childNodes.length == 0){
@@ -186,12 +191,13 @@ function addToColumn(card, location) {
     }
 }
 
-
 function placeCard(card, location){
+
     let domCard = document.createElement("div");
     domCard.id = card.id;
     domCard.classList.add("card");
     document.getElementById(location).append(domCard);
+    domCard.innerHTML = location;
 
     let cardObj = document.createElement("span");
     cardObj.style.display = "none";
@@ -204,10 +210,12 @@ function placeCard(card, location){
     document.getElementById(card.id).appendChild(img);
     document.getElementById(card.id).addEventListener("click",clickHandler);
 }
+
  //For moving a card down a specific amount
 function shiftDown(item, amount) {
     document.getElementById(item).style.top = (Math.ceil(parseInt(window.getComputedStyle(document.getElementById(item))["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 100) + amount) + "%";
 }
+
  //Script for randomizing the order of any array
 function randomizer(array){
     for (let i = 0; i < array.length; i++) {
