@@ -117,13 +117,10 @@ function clickHandler(){
 
         //This is something that I thought might work. Idk if it will be userful to you, but hopefully it is.
         //I'm not sure if it works. I just ranomly thought this might work and coded it out
-        let arr = []
-        console.log(whereCanPlace(getCardObj(this)));
-        arr = whereCanPlace(getCardObj(this));
+        let arr = whereCanPlace(getCardObj(this));
         console.log(whereCanPlace(getCardObj(this)));
         console.log(arr.length);
         for (let i = 0; i < arr.length; i++) {
-            console.log(document.getElementById(arr[i]));
             document.getElementById(arr[i]).classList.toggle("highlight");
         }
     }
@@ -158,17 +155,17 @@ function whereCanPlace(card) {
     } else if (document.getElementById("spade_back").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("spade_back").lastChild))) {
         placeArray.push(document.getElementById("spade_back").lastChild.id);
     } 
-    else { //This one is for the columns and kings
-        for (let i = 0; i < 7; i++) {
-            let columnCard = document.getElementById("column" + i).lastChild
+    
+    //This one is for the columns and kings
+    for (let i = 0; i < 7; i++) {
+        let columnCard = document.getElementById("column" + i).lastChild
 
-            if (columnCard != null && canPlaceColumn(card, getCardObj(columnCard))) //for regular cards
-                placeArray.push(columnCard.id);
-            else if (columnCard == null && card == 13) {  //for kings
-                placeArray.push(getElementById("column" + i).id);
-            }
-        } 
-    }
+        if (columnCard != null && canPlaceColumn(card, getCardObj(columnCard))) //for regular cards
+            placeArray.push(columnCard.id);
+        else if (columnCard == null && card == 13) {  //for kings
+            placeArray.push(getElementById("column" + i).id);
+        }
+    } 
     return placeArray;
 }
 
