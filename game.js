@@ -126,7 +126,12 @@ function clickHandler(){
     }
     else{
         //console.log(moving, this);
-        document.getElementById("column3").append(moving);
+        //document.getElementById("column3").append(moving);
+
+        //Hey, I wanted to take a look at this to see if I could help any here as well. Hopefully this helps. Message me with any questions you have
+        //Removes the unique card's div then adds it back to the specified column or foundation
+        removeCard(this);
+        addToColumn(getCardObj(moving), "column3");
         firstClickFlag = !firstClickFlag;
     }
     
@@ -178,14 +183,21 @@ function getCardObj(cardDiv) {
 
 //returns boolean variable. Needs Cards objects to be passed as parameters
 function canPlaceColumn(cardTop, cardBottom) {
-    let tempSuit;  //This makes it so we are checking for the same suit as the cardBottom suit
-    if (cardTop.suit <= 1) {  //if 1 or 0 then add two to make it either 3 or 2
-        tempSuit = cardTop.suit + 2;
+    let topSuitColor;  //This makes it so we are checking for the same suit as the cardBottom suit
+    let bottomSuitColor;
+
+    if (cardTop.suit <=1) {
+        topSuitColor = "red";
     } else {
-        tempSuit = cardTop.suit - 2;  //if 2 or 3 then subtract 2 to make it either 0 or 1
+        topSuitColor = "black";
+    }
+    if (cardBottom.suit <=1) {
+        bottomSuitColor = "red";
+    } else {
+        bottomSuitColor = "black";
     }
 
-    if (cardTop.value + 1 == cardBottom.value && tempSuit == cardBottom.suit) {
+    if (cardTop.value + 1 == cardBottom.value && topSuitColor != bottomSuitColor) {
         return true;
     } else {
         return false;
@@ -232,6 +244,11 @@ function placeCard(card, locationId){
     img.style.width = "100%";
     document.getElementById(card.id).appendChild(img);
     document.getElementById(card.id).addEventListener("click",clickHandler);
+}
+
+//removes the card div given a card object
+function removeCard(card) {
+    document.getElementById(card.id).remove();
 }
 
  //For moving a card down a specific amount
