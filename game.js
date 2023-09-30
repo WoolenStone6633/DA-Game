@@ -97,18 +97,38 @@ for (let suit = 0; suit < 4; suit++) {
         }
     }
 }
+
 //base for clicking on a card
 let firstClickFlag = false;
 var moving;
 function clickHandler(){
     
     if(!firstClickFlag){//first card clicked, highlights it
-        this.classList.toggle("highlight")
+        //this.classList.toggle("highlight")
         moving = this;
         firstClickFlag = !firstClickFlag;
+        //Sorry for butting into your code, but the getCardObj won't work if the first elememt of the div is anything other than the span
+        //Bellow in the placeCard function, I noticed that you added a line to print the div were the cards are located. This breaks the
+        //getCardObj function. If you need to add it, add it after the img element so the getCardObj function still works
+        //The line of code I'm talking about is commented out in the funciton
+        
+        //This line shows how to get the card object using the this keyword
+        //console.log(getCardObj(this));
+
+        //This is something that I thought might work. Idk if it will be userful to you, but hopefully it is.
+        //I'm not sure if it works. I just ranomly thought this might work and coded it out
+        let arr = []
+        console.log(whereCanPlace(getCardObj(this)));
+        arr = whereCanPlace(getCardObj(this));
+        console.log(whereCanPlace(getCardObj(this)));
+        console.log(arr.length);
+        for (let i = 0; i < arr.length; i++) {
+            console.log(document.getElementById(arr[i]));
+            document.getElementById(arr[i]).classList.toggle("highlight");
+        }
     }
     else{
-        console.log(moving, this);
+        //console.log(moving, this);
         document.getElementById("column3").append(moving);
         firstClickFlag = !firstClickFlag;
     }
@@ -149,6 +169,7 @@ function whereCanPlace(card) {
             }
         } 
     }
+    return placeArray;
 }
 
 //returns a Cards object from the specified div
@@ -202,7 +223,7 @@ function placeCard(card, locationId){
     domCard.id = card.id;
     domCard.classList.add("card");
     document.getElementById(locationId).append(domCard);
-    domCard.innerHTML = locationId;
+    //domCard.innerHTML = locationId;
 
     let cardObj = document.createElement("span");
     cardObj.style.display = "none";
