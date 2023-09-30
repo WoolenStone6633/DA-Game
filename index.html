@@ -138,18 +138,77 @@
 
 
         <script>
-            function placeCard(card, location){
-                let domCard = document.createElement("div");
-                domCard.id = card.id;
-                domCard.classList.add("card");
-                document.getElementById(location).append(domCard);
+            function whereCanPlace(card) {
+                let placeArray = [];  //array of divs
 
-                let img = document.createElement("img");
-                img.src = card.link;
-                img.style.width = "100%";
-                document.getElementById(card.id).appendChild(img);
+                //Bellow if statements are for the card foundations at the top right of the board
+                if (document.getElementById("heart_back").lastChild.id == undefined && card.id == "1_of_0") { //for aces
+                    placeArray.push(document.getElementById("heart_back").id);
+                } else if (document.getElementById("diamond_back").lastChild.id == undefined && card.id == "1_of_1") {
+                    placeArray.push(document.getElementById("diamond_back").id);
+                } else if (document.getElementById("club_back").lastChild.id == undefined && card.id == "1_of_2") {
+                    placeArray.push(document.getElementById("club_back").id);
+                } else if (document.getElementById("spade_back").lastChild.id == undefined && card.id == "1_of_3") {
+                    placeArray.push(document.getElementById("spade_back").id);
+                }  //for the rest of the cards
+                else if (document.getElementById("heart_back").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("heart_back").lastChild))) {
+                    placeArray.push(document.getElementById("heart_back").lastChild.id);
+                } else if (document.getElementById("diamond_back").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("diamond_back").lastChild))) {
+                    placeArray.push(document.getElementById("diamond_back").lastChild.id);
+                } else if (document.getElementById("club_back").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("club_back").lastChild))) {
+                    placeArray.push(document.getElementById("club_back").lastChild.id);
+                } else if (document.getElementById("spade_back").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("spade_back").lastChild))) {
+                    placeArray.push(document.getElementById("spade_back").lastChild.id);
+                } 
+                else { //This one is for the columns and kings
+                    for (let i = 0; i < 7; i++) {
+                        let columnCard = document.getElementById("column" + i).lastChild
+
+                        if (columnCard != null && canPlaceColumn(card, getCardObj(columnCard))) //for regular cards
+                            placeArray.push(columnCard.id);
+                        else if (columnCard == null && card == 13) {  //for kings
+                            placeArray.push(getElementById("column" + i).id);
+                        }
+                    } 
+                }
             }
         </script>
+
+        <script>
+            function getCardObj(cardDiv) {
+                let cardObj = JSON.parse(cardDiv.firstChild.innerText);
+                cardObj.__proto__ = Cards.prototype;
+                return cardObj;
+            }
+        </script>
+
+        <script>
+            function canPlaceColumn(cardTop, cardBottom) {
+                let tempSuit;  //This makes it so we are checking for the same suit as the cardBottom suit
+                if (cardTop.suit <= 1) {  //if 1 or 0 then add two to make it either 3 or 2
+                    tempSuit = cardTop.suit + 2;
+                } else {
+                    tempSuit = cardTop.suit - 2;  //if 2 or 3 then subtract 2 to make it either 0 or 1
+                }
+
+                if (cardTop.value + 1 == cardBottom.value && tempSuit == cardBottom.suit) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        </script>
+
+<script>
+    function canPlaceFoundation(cardTop, cardBottom) {
+        let tempSuit;  //This makes it so we are checking for the same suit as the cardBottom suit
+        if (cardTop.value - 1 == cardBottom.value && cardTop.suit == cardBottom.suit) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
 
         <script> //Places a card in the column. Places it in the correct position away from the other card under it
             function addToColumn(card, location) {
@@ -160,6 +219,25 @@
                     placeCard(card, location);
                     shiftDown(card.id, (Math.ceil(parseInt(window.getComputedStyle(document.getElementById(location).childNodes[document.getElementById(location).childNodes.length - 2])["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 10000) + shift * 100) / 100);
                 }
+            }
+        </script>
+
+        <script>
+            function placeCard(card, location){
+                let domCard = document.createElement("div");
+                domCard.id = card.id;
+                domCard.classList.add("card");
+                document.getElementById(location).append(domCard);
+
+                let cardObj = document.createElement("span");
+                cardObj.style.display = "none";
+                cardObj.innerText =  JSON.stringify(card);
+                document.getElementById(domCard.id).append(cardObj);
+
+                let img = document.createElement("img");
+                img.src = card.link;
+                img.style.width = "100%";
+                document.getElementById(card.id).appendChild(img);
             }
         </script>
 
@@ -177,6 +255,7 @@
                 }
             }
          </script>
+
     </head>
     <body onload="setGame()">
         <div id="game_board">
