@@ -3,16 +3,10 @@ class Cards {
     value;
     suit;
     flipFlag;
-    spot = " ";
-
     constructor(value, suit){
         this.value = value;
         this.suit = suit;
         this.flipFlag = false;
-        this.spot = " ";
-    }
-    set spot(location) {
-        this.spot = location;
     }
     get value() {
         return this.value;
@@ -56,7 +50,6 @@ for (let suit = 0; suit < 4; suit++) {
     }
     //Randomizes the order of the cards
     randomizer(initialStack);
-
     //Places the cards on the board in their correct initial spot
     for (let i = (initialStack.length -1); i >= 0; i--) {
         if (i >= 28) {
@@ -102,42 +95,58 @@ for (let suit = 0; suit < 4; suit++) {
 let firstClickFlag = false;
 var movingDiv;
 function clickHandler(){
-    
-    if(!firstClickFlag){//first card clicked, highlights it
-        //this.classList.toggle("highlight")
-        movingDiv = this;
-        firstClickFlag = !firstClickFlag;
-
-        //Sorry for butting into your code, but the getCardObj won't work if the first elememt of the div is anything other than the span
-        //Bellow in the placeCard function, I noticed that you added a line to print the div were the cards are located. This breaks the
-        //getCardObj function. If you need to add it, add it after the img element so the getCardObj function still works
-        //The line of code I'm talking about is commented out in the funciton
+    let arr;
+    if(!firstClickFlag){//sets movingDiv and the first click flag, checking takes place after the else condiditon
         
-        //This line shows how to get the card object using the this keyword
-        console.log(getCardObj(this));
-
-        //This is something that I thought might work. Idk if it will be userful to you, but hopefully it is.
-        //I'm not sure if it works. I just ranomly thought this might work and coded it out
-        let arr = whereCanPlace(getCardObj(this));
-        console.log(whereCanPlace(getCardObj(this)));
-        console.log(arr.length);
-        for (let i = 0; i < arr.length; i++) {
-            document.getElementById(arr[i]).classList.toggle("highlight");  ///I changed the card size when this is called to make it obvious if its working or not
+        movingDiv = this;
+        arr = whereCanPlace(getCardObj(movingDiv));
+    }
+    else{//if a collumn is clicked after a first card is selected
+        //im gonna use a loop and a flag to see if the selected card can be moved to, its not super efficient but itll work
+        arr = whereCanPlace(getCardObj(movingDiv));
+        let legal = false;
+        for(i = 0; i < arr.length; i++){
+            if(this.id == arr[i]){
+                legal = true;
+            }
         }
-    }
-    else{
-        //console.log(moving, this);
-        //document.getElementById("column3").append(moving);
+        if(legal){//only moves the card if the moving target is legal
 
-        //Hey, I wanted to take a look at this to see if I could help any here as well. Hopefully this helps. Message me with any questions you have
-        //Removes the unique card's div then adds it back to the specified column or foundation
-        let temp = movingDiv
-        removeCard(movingDiv);
-        addToColumn(getCardObj(temp), document.getElementById(this.id).parentNode.id);
-        firstClickFlag = !firstClickFlag;
+            //declarations of temp and capsule variables
+            let temp = movingDiv
+            moveFrom = movingDiv.parentNode.id;
+            destination = this.parentNode.id;
+            
+            //removing and adding the card from and to the divs
+            removeCard(movingDiv);
+            addToColumn(getCardObj(temp), destination);
+            
+            //makes a variable that contains the card that was underneath the moving card before the move
+            let cardBelow = getCardObj(document.getElementById(moveFrom).lastChild);
+
+            //checks if the card below the moved one is face down and flips it if it is
+            if(cardBelow.flipFlag == true){
+                cardBelow.flip();
+                document.getElementById(moveFrom).lastChild.lastChild.src = cardBelow.link;
+            }
+
+            //WIP currently not letting me unhighlight the card under the selected card after moving the selected 
+            //the lower section works but its just this one. you can test it by refresing page till you get two of the same color and value card and one that has value+1 and opposite suit
+            console.log(this, document.getElementById(this));
+            this.classList.toggle("highlight");
+            console.log(this.classList);
+        }
+       
     }
-    
+    //highlighting where it can be placed. i have it set underneath so that it will run to clear the highlighted sections after the second click
+    for (let i = 0; i < arr.length; i++) {
+        document.getElementById(arr[i]).classList.toggle("highlight");  ///I changed the card size when this is called to make it obvious if its working or not
+    }
+    firstClickFlag = !firstClickFlag;//toggles. makes it so that if someone clicks on an unmovable column, it will cancel the move
+
 }
+
+
 
 //returns an array of div ids where the card can be placed. The array will be empty if the card can not be placed anywhere
 function whereCanPlace(card) {
