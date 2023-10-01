@@ -108,65 +108,72 @@ var movingDiv;
 function clickHandler(){
     let arr;
     let wasNull;
-    console.log(this.id);
-    if(!firstClickFlag && this.id.substring(0,6) != "column" && this.lastChild.src != "Playing Cards/Back.png"){//sets movingDiv and the first click flag, checking takes place after the else condiditon
+    if (this.parentNode.id == "stack") {
+        let temp = this;
         
-        movingDiv = this;
-        arr = whereCanPlace(getCardObj(movingDiv));
-        if (arr.length == 0) {  //For is the user clicks on a card that doesn't have any legal moves
-            firstClickFlag = !firstClickFlag;  //flips the flag so when it is flipped at the end, it starts at the if statement
-        }
-    }
-    else{//if a collumn is clicked after a first card is selected
-        //im gonna use a loop and a flag to see if the selected card can be moved to, its not super efficient but itll work
-        arr = whereCanPlace(getCardObj(movingDiv));
-        let legal = false;
-        for(i = 0; i < arr.length; i++){
-            if(this.id == arr[i]){
-                legal = true;
+        flipCard(getCardObj(this));
+        removeCard(this);
+        placeCard(getCardObj(temp), "showStack");
+    } else {
+        if(!firstClickFlag && this.id.substring(0,6) != "column" && this.lastChild.src != "Playing Cards/Back.png"){//sets movingDiv and the first click flag, checking takes place after the else condiditon
+            console.log("if statement ran");
+            movingDiv = this;
+            arr = whereCanPlace(getCardObj(movingDiv));
+            if (arr.length == 0) {  //For is the user clicks on a card that doesn't have any legal moves
+                firstClickFlag = !firstClickFlag;  //flips the flag so when it is flipped at the end, it starts at the if statement
             }
         }
-        if(legal){//only moves the card if the moving target is legal
-
-            //declarations of temp and capsule variables and select target desination
-            let temp = movingDiv
-            moveFrom = movingDiv.parentNode.id;
-            if (this.id.substring(0,6) != "column" && this.classList != "foundation") { /*If the column is not clicked or the foundation is not clicked*/ 
-                destination = this.parentNode.id;
-            } else {
-                destination = this.id;
+        else{//if a collumn is clicked after a first card is selected
+            console.log("else statemnet ran");
+            arr = whereCanPlace(getCardObj(movingDiv));
+            let legal = false;
+            for(i = 0; i < arr.length; i++){
+                if(this.id == arr[i]){
+                    legal = true;
+                }
             }
-            
-            //removing and adding the card from and to a specified div
-            removeCard(movingDiv);
-            if (destination.substring(0,6) == "column") {
-                wasNull = true;
-                addToColumn(getCardObj(temp), destination);
-            } else if (desination == "foundation") {
-                console.log("There was an error somehow");
-            }
-            
-            //Checks to see if there is a flippable card and flip it if there is one
-            if (document.getElementById(moveFrom).lastChild != null) { 
-                //makes a variable that contains the card that was underneath the moving card before the move
-                let cardBelowFrom = getCardObj(document.getElementById(moveFrom).lastChild);
+            if(legal){//only moves the card if the moving target is legal
 
-                //checks if the card below the moved one is face down and flips it if it is
-                if(cardBelowFrom.flipFlag == true){
-                    flipCard(cardBelowFrom);
+                //declarations of temp and capsule variables and select target desination
+                let temp = movingDiv
+                moveFrom = movingDiv.parentNode.id;
+                if (this.id.substring(0,6) != "column" && this.classList != "foundation") { /*If the column is not clicked or the foundation is not clicked*/ 
+                    destination = this.parentNode.id;
+                } else {
+                    destination = this.id;
+                }
+                
+                //removing and adding the card from and to a specified div
+                removeCard(movingDiv);
+                if (destination.substring(0,6) == "column") {
+                    wasNull = true;
+                    addToColumn(getCardObj(temp), destination);
+                } else if (desination == "foundation") {
+                    console.log("There was an error somehow");
+                }
+                
+                //Checks to see if there is a flippable card and flip it if there is one
+                if (document.getElementById(moveFrom).lastChild != null) { 
+                    //makes a variable that contains the card that was underneath the moving card before the move
+                    let cardBelowFrom = getCardObj(document.getElementById(moveFrom).lastChild);
+
+                    //checks if the card below the moved one is face down and flips it if it is
+                    if(cardBelowFrom.flipFlag == true){
+                        flipCard(cardBelowFrom);
+                    }
                 }
             }
         }
-    }
 
-    if ((this.id.substring(0,6) != "column" && getCardObj(this).link != "Playing Cards/Back.png") || (getCardObj(movingDiv).value == 13 && wasNull)) {
-        console.log("This part ran");
-        //highlighting where it can be placed. i have it set underneath so that it will run to clear the highlighted sections after the second click
-        for (let i = 0; i < arr.length; i++) {
-            document.getElementById(arr[i]).classList.toggle("highlight");  //enlarged cards to make it obvious when they're legal
+        if ((this.id.substring(0,6) != "column" && getCardObj(this).link != "Playing Cards/Back.png") || (getCardObj(movingDiv).value == 13 && wasNull)) {
+            console.log("Bottom if ran");
+            //highlighting where it can be placed. i have it set underneath so that it will run to clear the highlighted sections after the second click
+            for (let i = 0; i < arr.length; i++) {
+                document.getElementById(arr[i]).classList.toggle("highlight");  //enlarged cards to make it obvious when they're legal
+            }
+            firstClickFlag = !firstClickFlag;//toggles. makes it so that if someone clicks on an unmovable column, it will cancel the move
+            wasNull = false;
         }
-        firstClickFlag = !firstClickFlag;//toggles. makes it so that if someone clicks on an unmovable column, it will cancel the move
-        wasNull = false;
     }
 }
 
