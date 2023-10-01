@@ -143,13 +143,26 @@ function clickHandlerCards(){
                     destination = this.id;
                 }
                 
-                //removing and adding the card from and to a specified div
-                removeCard(movingDiv);
-                if (destination.substring(0,6) == "column") {
+                //Checks to see if the legal move was an empty column
+                if (this.lastChild == null) {
                     wasNull = true;
-                    addToColumn(getCardObj(temp), destination);
-                } else if (desination == "foundation") {
-                    console.log("There was an error somehow");
+                }
+                //removing and adding the card from and to a specified div
+                if (movingDiv.nextSibling == null) {
+                    removeCard(movingDiv);
+                    if (destination.substring(0,6) == "column") {
+                        addToColumn(getCardObj(temp), destination);
+                    } else if (desination == "foundation") {
+                        console.log("There was an error somehow");
+                    }
+                } else {
+                    //wasNull = true;
+                    let previousSib = movingDiv.previousSibling;
+                    while (previousSib.nextSibling != null) {
+                        let tempSib = previousSib.nextSibling;
+                        removeCard(previousSib.nextSibling);
+                        addToColumn(getCardObj(tempSib), destination);
+                    }
                 }
                 
                 //Checks to see if there is a flippable card and flip it if there is one
