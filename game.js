@@ -107,6 +107,7 @@ var movingDiv;
 
 function clickHandler(){
     let arr;
+    let wasNull;
     console.log(this.id);
     if(!firstClickFlag && this.id.substring(0,6) != "column"){//sets movingDiv and the first click flag, checking takes place after the else condiditon
         
@@ -139,6 +140,7 @@ function clickHandler(){
             //removing and adding the card from and to a specified div
             removeCard(movingDiv);
             if (destination.substring(0,6) == "column") {
+                wasNull = true;
                 addToColumn(getCardObj(temp), destination);
             } else if (desination == "foundation") {
                 console.log("There was an error somehow");
@@ -157,40 +159,16 @@ function clickHandler(){
         }
     }
 
-    if (this.id.substring(0,6) != "column" || (this.lastChild == null && getCardObj(movingDiv).value == 13)) {
+    if (this.id.substring(0,6) != "column" || (getCardObj(movingDiv).value == 13 && wasNull)) {
         console.log("This part ran");
         //highlighting where it can be placed. i have it set underneath so that it will run to clear the highlighted sections after the second click
         for (let i = 0; i < arr.length; i++) {
             document.getElementById(arr[i]).classList.toggle("highlight");  //enlarged cards to make it obvious when they're legal
         }
         firstClickFlag = !firstClickFlag;//toggles. makes it so that if someone clicks on an unmovable column, it will cancel the move
+        wasNull = false;
     }
 }
-
-// function clickHandler() {
-    
-//     if(!firstClickFlag) {//first card clicked, highlights it
-//         movingDiv = this;
-//         firstClickFlag = !firstClickFlag;
-
-//         let arr = whereCanPlace(getCardObj(this));
-//         for (let i = 0; i < arr.length; i++) {
-//             document.getElementById(arr[i]).classList.toggle("highlight");  ///I changed the card size when this is called to make it obvious if its working or not
-//         }
-//         console.log("if", this);
-//     }
-//     else {
-//         let temp = movingDiv
-//         console.log("else", this);
-//         if (this.parentNode.id.substring(0,6) == "column") {
-//             if (movingDiv != null && this.parentNode != null) {
-//                 removeCard(movingDiv);
-//                 addToColumn(getCardObj(temp), this.parentNode.id);
-//                 firstClickFlag = !firstClickFlag;
-//             }
-//         }
-//     }
-// }
 
 //returns an array of div ids where the card can be placed. The array will be empty if the card can not be placed anywhere
 function whereCanPlace(card) {
