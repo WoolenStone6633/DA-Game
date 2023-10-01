@@ -92,8 +92,9 @@ let initialStack = []
 
     //Adds event listeners to specific divs
     for (let i = 0; i < 7; i++) {
-        document.getElementById("column" + i).addEventListener("click",clickHandler);
+        document.getElementById("column" + i).addEventListener("click",clickHandlerCards);
     }
+    document.getElementById("redo").addEventListener("click", clickHandlerRedo);
     // document.getElementById("heart_back").lastElementChild.addEventListener("click",clickHandler);
     // document.getElementById("diamond_back").addEventListener("click",clickHandler);
     // document.getElementById("club_back").addEventListener("click",clickHandler);
@@ -105,7 +106,7 @@ let initialStack = []
 let firstClickFlag = false;
 var movingDiv;
 
-function clickHandler(){
+function clickHandlerCards(){
     let arr;
     let wasNull;
     if (this.parentNode.id == "stack") {
@@ -175,6 +176,10 @@ function clickHandler(){
             wasNull = false;
         }
     }
+}
+
+function clickHandlerRedo() {
+    console.log("It was clicked");
 }
 
 //returns an array of div ids where the card can be placed. The array will be empty if the card can not be placed anywhere
@@ -281,7 +286,7 @@ function placeCard(card, locationId){
     img.src = card.link;
     img.style.width = "100%";
     document.getElementById(card.id).appendChild(img);
-    document.getElementById(card.id).addEventListener("click",clickHandler);
+    document.getElementById(card.id).addEventListener("click",clickHandlerCards);
 }
 
 //removes the card div given a card object
