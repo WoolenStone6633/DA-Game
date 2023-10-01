@@ -101,6 +101,9 @@ function clickHandler(){
         
         movingDiv = this;
         arr = whereCanPlace(getCardObj(movingDiv));
+        if (arr.length == 0) {  //For is the user clicks on a card that doesn't have any legal moves
+            firstClickFlag = !firstClickFlag;  //flips the flag so when it is flipped at the end, it starts at the if statement
+        }
     }
     else{//if a collumn is clicked after a first card is selected
         //im gonna use a loop and a flag to see if the selected card can be moved to, its not super efficient but itll work
@@ -123,25 +126,18 @@ function clickHandler(){
             addToColumn(getCardObj(temp), destination);
             
             //makes a variable that contains the card that was underneath the moving card before the move
-            let cardBelow = getCardObj(document.getElementById(moveFrom).lastChild);
+            let cardBelowFrom = getCardObj(document.getElementById(moveFrom).lastChild);
 
             //checks if the card below the moved one is face down and flips it if it is
-            if(cardBelow.flipFlag == true){
-                cardBelow.flip();
-                document.getElementById(moveFrom).lastChild.lastChild.src = cardBelow.link;
+            if(cardBelowFrom.flipFlag == true){
+                flipCard(cardBelowFrom);
             }
-
-            //WIP currently not letting me unhighlight the card under the selected card after moving the selected 
-            //the lower section works but its just this one. you can test it by refresing page till you get two of the same color and value card and one that has value+1 and opposite suit
-            console.log(this, document.getElementById(this));
-            this.classList.toggle("highlight");
-            console.log(this.classList);
         }
-       
     }
+
     //highlighting where it can be placed. i have it set underneath so that it will run to clear the highlighted sections after the second click
     for (let i = 0; i < arr.length; i++) {
-        document.getElementById(arr[i]).classList.toggle("highlight");  ///I changed the card size when this is called to make it obvious if its working or not
+        document.getElementById(arr[i]).classList.toggle("highlight");  //enlarged cards to make it obvious when they're legal
     }
     firstClickFlag = !firstClickFlag;//toggles. makes it so that if someone clicks on an unmovable column, it will cancel the move
 }
@@ -280,6 +276,11 @@ function placeCard(card, locationId){
     document.getElementById(card.id).addEventListener("click",clickHandler);
 }
 
+//Takes a div and object and updates the div's objects attributes based on the parameter object's attributes
+function updateDivObj(div, object) {
+    div.firstChild.innerText =  JSON.stringify(object);
+}
+
 //removes the card div given a card object
 function removeCard(cardDiv) {
     document.getElementById(cardDiv.id).remove();
@@ -288,6 +289,13 @@ function removeCard(cardDiv) {
  //For moving a card down a specific amount
 function shiftDown(item, amount) {
     document.getElementById(item).style.top = (Math.ceil(parseInt(window.getComputedStyle(document.getElementById(item))["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 100) + amount) + "%";
+}
+
+//Takes a card object and flips it
+function flipCard(card) {
+    card.flip();
+    document.getElementById(card.id).lastChild.src = card.link;
+    updateDivObj(document.getElementById(card.id), card);
 }
 
  //Script for randomizing the order of any array
