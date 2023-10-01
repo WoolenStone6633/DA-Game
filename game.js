@@ -9,7 +9,6 @@ class Cards {
         this.value = value;
         this.suit = suit;
         this.flipFlag = false;
-        this.spot = " ";
     }
     set spot(location) {
         this.spot = location;
@@ -101,9 +100,9 @@ for (let suit = 0; suit < 4; suit++) {
 //base for clicking on a card
 let firstClickFlag = false;
 var movingDiv;
-function clickHandler(){
+function clickHandler() {
     
-    if(!firstClickFlag){//first card clicked, highlights it
+    if(!firstClickFlag) {//first card clicked, highlights it
         //this.classList.toggle("highlight")
         movingDiv = this;
         firstClickFlag = !firstClickFlag;
@@ -112,31 +111,31 @@ function clickHandler(){
         //Bellow in the placeCard function, I noticed that you added a line to print the div were the cards are located. This breaks the
         //getCardObj function. If you need to add it, add it after the img element so the getCardObj function still works
         //The line of code I'm talking about is commented out in the funciton
-        
-        //This line shows how to get the card object using the this keyword
-        console.log(getCardObj(this));
 
         //This is something that I thought might work. Idk if it will be userful to you, but hopefully it is.
         //I'm not sure if it works. I just ranomly thought this might work and coded it out
         let arr = whereCanPlace(getCardObj(this));
-        console.log(whereCanPlace(getCardObj(this)));
-        console.log(arr.length);
         for (let i = 0; i < arr.length; i++) {
             document.getElementById(arr[i]).classList.toggle("highlight");  ///I changed the card size when this is called to make it obvious if its working or not
         }
+        console.log("if", this);
     }
-    else{
+    else {
         //console.log(moving, this);
         //document.getElementById("column3").append(moving);
 
         //Hey, I wanted to take a look at this to see if I could help any here as well. Hopefully this helps. Message me with any questions you have
         //Removes the unique card's div then adds it back to the specified column or foundation
         let temp = movingDiv
-        removeCard(movingDiv);
-        addToColumn(getCardObj(temp), document.getElementById(this.id).parentNode.id);
-        firstClickFlag = !firstClickFlag;
+        console.log("else", this);
+        if (this.parentNode.id.substring(0,6) == "column") {
+            if (movingDiv != null && this.parentNode != null) {
+                removeCard(movingDiv);
+                addToColumn(getCardObj(temp), this.parentNode.id);
+                firstClickFlag = !firstClickFlag;
+            }
+        }
     }
-    
 }
 
 //returns an array of div ids where the card can be placed. The array will be empty if the card can not be placed anywhere
@@ -234,7 +233,6 @@ function placeCard(card, locationId){
     domCard.id = card.id;
     domCard.classList.add("card");
     document.getElementById(locationId).append(domCard);
-    //domCard.innerHTML = locationId;
 
     let cardObj = document.createElement("span");
     cardObj.style.display = "none";
