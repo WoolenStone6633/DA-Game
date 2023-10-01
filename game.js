@@ -186,6 +186,10 @@ function clickHandlerCards(){
                         flipCard(cardBelowFrom);
                     }
                 }
+
+                if (getWon()) {
+                    alert("You won");
+                }
             }
         }
 
@@ -248,13 +252,6 @@ function whereCanPlace(card) {
         }
     } 
     return placeArray;
-}
-
-//returns a Cards object from the specified div
-function getCardObj(cardDiv) {
-    let cardObj = JSON.parse(cardDiv.firstChild.innerText);
-    cardObj.__proto__ = Cards.prototype;
-    return cardObj;
 }
 
 //returns boolean variable. Needs Cards objects to be passed as parameters
@@ -320,6 +317,13 @@ function placeCard(card, locationId){
     document.getElementById(card.id).addEventListener("click",clickHandlerCards);
 }
 
+//returns a Cards object from the specified div
+function getCardObj(cardDiv) {
+    let cardObj = JSON.parse(cardDiv.firstChild.innerText);
+    cardObj.__proto__ = Cards.prototype;
+    return cardObj;
+}
+
 //removes the card div given a card object
 function removeCard(cardDiv) {
     document.getElementById(cardDiv.id).remove();
@@ -347,5 +351,18 @@ function randomizer(array){
     for (let i = 0; i < array.length; i++) {
         let temp = Math.floor(Math.random() * (array.length));
         [array[temp], array[i]] = [array[i], array[temp]];
+    }
+}
+
+function getWon() {
+    let heartLen = document.getElementById("heart_back").childNodes.length - 3
+    let diamondLen = document.getElementById("diamond_back").childNodes.length - 3
+    let clubLen = document.getElementById("club_back").childNodes.length - 3
+    let spadeLen = document.getElementById("spade_back").childNodes.length - 3
+
+    if (heartLen == 13 && diamondLen == 13 && clubLen == 13 && spadeLen == 13) {
+        return true;
+    } else {
+        return false;
     }
 }
