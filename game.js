@@ -115,12 +115,14 @@ function clickHandlerCards(){
         removeCard(this);
         placeCard(getCardObj(temp), "showStack");
     } else {
-        if(!firstClickFlag && this.id.substring(0,6) != "column" && this.lastChild.src != "Playing Cards/Back.png"){//sets movingDiv and the first click flag, checking takes place after the else condiditon
-            console.log("if statement ran");
-            movingDiv = this;
-            arr = whereCanPlace(getCardObj(movingDiv));
-            if (arr.length == 0) {  //For is the user clicks on a card that doesn't have any legal moves
-                firstClickFlag = !firstClickFlag;  //flips the flag so when it is flipped at the end, it starts at the if statement
+        if(!firstClickFlag){//sets movingDiv and the first click flag, checking takes place after the else condiditon
+            if (this.id.substring(0,6) != "column" && this.lastChild.src != "Playing Cards/Back.png") {
+                console.log("if statement ran");
+                movingDiv = this;
+                arr = whereCanPlace(getCardObj(movingDiv));
+                if (arr.length == 0) {  //For is the user clicks on a card that doesn't have any legal moves
+                    firstClickFlag = !firstClickFlag;  //flips the flag so when it is flipped at the end, it starts at the if statement
+                }
             }
         }
         else{//if a collumn is clicked after a first card is selected
@@ -147,6 +149,7 @@ function clickHandlerCards(){
                 if (this.lastChild == null) {
                     wasNull = true;
                 }
+
                 //removing and adding the card from and to a specified div
                 if (movingDiv.nextSibling == null) {
                     removeCard(movingDiv);
@@ -155,13 +158,21 @@ function clickHandlerCards(){
                     } else if (desination == "foundation") {
                         console.log("There was an error somehow");
                     }
-                } else {
-                    //wasNull = true;
-                    let previousSib = movingDiv.previousSibling;
-                    while (previousSib.nextSibling != null) {
-                        let tempSib = previousSib.nextSibling;
-                        removeCard(previousSib.nextSibling);
-                        addToColumn(getCardObj(tempSib), destination);
+                } else {  //moves all the cards on top of the specific card you're moving
+                    if (movingDiv.previousSibling != undefined) {
+                        let previousSib = movingDiv.previousSibling;
+                        while (previousSib.nextSibling != null) {
+                            let tempSib = previousSib.nextSibling;
+                            removeCard(previousSib.nextSibling);
+                            addToColumn(getCardObj(tempSib), destination);
+                        }
+                    } else {
+                        let parentDiv = movingDiv.parentNode;
+                        while (parentDiv.firstChild != null) {
+                            let tempChild = parentDiv.firstChild;
+                            removeCard(parentDiv.firstChild);
+                            addToColumn(getCardObj(tempChild), destination);
+                        }
                     }
                 }
                 
