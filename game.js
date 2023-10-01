@@ -125,12 +125,15 @@ function clickHandler(){
             removeCard(movingDiv);
             addToColumn(getCardObj(temp), destination);
             
-            //makes a variable that contains the card that was underneath the moving card before the move
-            let cardBelowFrom = getCardObj(document.getElementById(moveFrom).lastChild);
+            //Checks to see if there is a flippable card
+            if (document.getElementById(moveFrom).lastChild != null) { 
+                //makes a variable that contains the card that was underneath the moving card before the move
+                let cardBelowFrom = getCardObj(document.getElementById(moveFrom).lastChild);
 
-            //checks if the card below the moved one is face down and flips it if it is
-            if(cardBelowFrom.flipFlag == true){
-                flipCard(cardBelowFrom);
+                //checks if the card below the moved one is face down and flips it if it is
+                if(cardBelowFrom.flipFlag == true){
+                    flipCard(cardBelowFrom);
+                }
             }
         }
     }
