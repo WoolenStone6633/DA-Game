@@ -109,7 +109,7 @@ function clickHandler(){
     let arr;
     let wasNull;
     console.log(this.id);
-    if(!firstClickFlag && this.id.substring(0,6) != "column"){//sets movingDiv and the first click flag, checking takes place after the else condiditon
+    if(!firstClickFlag && this.id.substring(0,6) != "column" && this.lastChild.src != "Playing Cards/Back.png"){//sets movingDiv and the first click flag, checking takes place after the else condiditon
         
         movingDiv = this;
         arr = whereCanPlace(getCardObj(movingDiv));
@@ -159,7 +159,7 @@ function clickHandler(){
         }
     }
 
-    if (this.id.substring(0,6) != "column" || (getCardObj(movingDiv).value == 13 && wasNull)) {
+    if ((this.id.substring(0,6) != "column" && getCardObj(this).link != "Playing Cards/Back.png") || (getCardObj(movingDiv).value == 13 && wasNull)) {
         console.log("This part ran");
         //highlighting where it can be placed. i have it set underneath so that it will run to clear the highlighted sections after the second click
         for (let i = 0; i < arr.length; i++) {
