@@ -204,7 +204,6 @@ function canPlaceColumn(cardTop, cardBottom) {
 
 //returns boolean variable. Needs Cards objects to be passes as parameters
 function canPlaceFoundation(cardTop, cardBottom) {
-    let tempSuit;  //This makes it so we are checking for the same suit as the cardBottom suit
     if (cardTop.value - 1 == cardBottom.value && cardTop.suit == cardBottom.suit) {
         return true;
     } else {
