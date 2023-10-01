@@ -42,10 +42,10 @@ class Cards {
 //For setting up the board. Placing cards, randomizing their order, etc.
 function setGame() {
 let initialStack = []
-for (let suit = 0; suit < 4; suit++) {
-    for (let value = 1; value <= 13; value++) {
-        let card = new Cards(value, suit);
-        initialStack.push(card);
+    for (let suit = 0; suit < 4; suit++) {
+        for (let value = 1; value <= 13; value++) {
+            let card = new Cards(value, suit);
+            initialStack.push(card);
         }
     }
     //Randomizes the order of the cards
@@ -89,6 +89,16 @@ for (let suit = 0; suit < 4; suit++) {
             addToColumn(initialStack[i], "column6");
         }
     }
+
+    //Adds event listeners to specific divs
+    for (let i = 0; i < 7; i++) {
+        document.getElementById("column" + i).addEventListener("click",clickHandler);
+    }
+    // document.getElementById("heart_back").lastElementChild.addEventListener("click",clickHandler);
+    // document.getElementById("diamond_back").addEventListener("click",clickHandler);
+    // document.getElementById("club_back").addEventListener("click",clickHandler);
+    // document.getElementById("spade_back").addEventListener("click",clickHandler);
+    // document.getElementById("redo").addEventListener("click",clickHandler);
 }
 
 //base for clicking on a card
@@ -97,7 +107,8 @@ var movingDiv;
 
 function clickHandler(){
     let arr;
-    if(!firstClickFlag){//sets movingDiv and the first click flag, checking takes place after the else condiditon
+    console.log(this.id);
+    if(!firstClickFlag && this.id.substring(0,6) != "column"){//sets movingDiv and the first click flag, checking takes place after the else condiditon
         
         movingDiv = this;
         arr = whereCanPlace(getCardObj(movingDiv));
@@ -116,16 +127,24 @@ function clickHandler(){
         }
         if(legal){//only moves the card if the moving target is legal
 
-            //declarations of temp and capsule variables
+            //declarations of temp and capsule variables and select target desination
             let temp = movingDiv
             moveFrom = movingDiv.parentNode.id;
-            destination = this.parentNode.id;
+            if (this.id.substring(0,6) != "column" && this.classList != "foundation") { /*If the column is not clicked or the foundation is not clicked*/ 
+                destination = this.parentNode.id;
+            } else {
+                destination = this.id;
+            }
             
-            //removing and adding the card from and to the divs
+            //removing and adding the card from and to a specified div
             removeCard(movingDiv);
-            addToColumn(getCardObj(temp), destination);
+            if (destination.substring(0,6) == "column") {
+                addToColumn(getCardObj(temp), destination);
+            } else if (desination == "foundation") {
+                console.log("There was an error somehow");
+            }
             
-            //Checks to see if there is a flippable card
+            //Checks to see if there is a flippable card and flip it if there is one
             if (document.getElementById(moveFrom).lastChild != null) { 
                 //makes a variable that contains the card that was underneath the moving card before the move
                 let cardBelowFrom = getCardObj(document.getElementById(moveFrom).lastChild);
@@ -138,11 +157,14 @@ function clickHandler(){
         }
     }
 
-    //highlighting where it can be placed. i have it set underneath so that it will run to clear the highlighted sections after the second click
-    for (let i = 0; i < arr.length; i++) {
-        document.getElementById(arr[i]).classList.toggle("highlight");  //enlarged cards to make it obvious when they're legal
+    if (this.id.substring(0,6) != "column" || (this.lastChild == null && getCardObj(movingDiv).value == 13)) {
+        console.log("This part ran");
+        //highlighting where it can be placed. i have it set underneath so that it will run to clear the highlighted sections after the second click
+        for (let i = 0; i < arr.length; i++) {
+            document.getElementById(arr[i]).classList.toggle("highlight");  //enlarged cards to make it obvious when they're legal
+        }
+        firstClickFlag = !firstClickFlag;//toggles. makes it so that if someone clicks on an unmovable column, it will cancel the move
     }
-    firstClickFlag = !firstClickFlag;//toggles. makes it so that if someone clicks on an unmovable column, it will cancel the move
 }
 
 // function clickHandler() {
