@@ -94,6 +94,7 @@ for (let suit = 0; suit < 4; suit++) {
 //base for clicking on a card
 let firstClickFlag = false;
 var movingDiv;
+
 function clickHandler(){
     let arr;
     if(!firstClickFlag){//sets movingDiv and the first click flag, checking takes place after the else condiditon
@@ -143,8 +144,32 @@ function clickHandler(){
         document.getElementById(arr[i]).classList.toggle("highlight");  ///I changed the card size when this is called to make it obvious if its working or not
     }
     firstClickFlag = !firstClickFlag;//toggles. makes it so that if someone clicks on an unmovable column, it will cancel the move
-
 }
+
+// function clickHandler() {
+    
+//     if(!firstClickFlag) {//first card clicked, highlights it
+//         movingDiv = this;
+//         firstClickFlag = !firstClickFlag;
+
+//         let arr = whereCanPlace(getCardObj(this));
+//         for (let i = 0; i < arr.length; i++) {
+//             document.getElementById(arr[i]).classList.toggle("highlight");  ///I changed the card size when this is called to make it obvious if its working or not
+//         }
+//         console.log("if", this);
+//     }
+//     else {
+//         let temp = movingDiv
+//         console.log("else", this);
+//         if (this.parentNode.id.substring(0,6) == "column") {
+//             if (movingDiv != null && this.parentNode != null) {
+//                 removeCard(movingDiv);
+//                 addToColumn(getCardObj(temp), this.parentNode.id);
+//                 firstClickFlag = !firstClickFlag;
+//             }
+//         }
+//     }
+// }
 
 
 
@@ -217,7 +242,6 @@ function canPlaceColumn(cardTop, cardBottom) {
 
 //returns boolean variable. Needs Cards objects to be passes as parameters
 function canPlaceFoundation(cardTop, cardBottom) {
-    let tempSuit;  //This makes it so we are checking for the same suit as the cardBottom suit
     if (cardTop.value - 1 == cardBottom.value && cardTop.suit == cardBottom.suit) {
         return true;
     } else {
@@ -243,7 +267,6 @@ function placeCard(card, locationId){
     domCard.id = card.id;
     domCard.classList.add("card");
     document.getElementById(locationId).append(domCard);
-    //domCard.innerHTML = locationId;
 
     let cardObj = document.createElement("span");
     cardObj.style.display = "none";
