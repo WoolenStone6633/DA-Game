@@ -10,9 +10,6 @@ class Cards {
         this.suit = suit;
         this.flipFlag = false;
     }
-    set spot(location) {
-        this.spot = location;
-    }
     get value() {
         return this.value;
     }
