@@ -54,7 +54,7 @@ let initialStack = []
     for (let i = (initialStack.length -1); i >= 0; i--) {
         if (i >= 28) {
             initialStack[i].flip();
-            //placeCard(initialStack[i], "stack");
+            placeCard(initialStack[i], "stack");
         } else if (i == 27) {
             placeCard(initialStack[i], "column0");
         } else if (i >= 25) {
@@ -94,12 +94,11 @@ let initialStack = []
     for (let i = 0; i < 7; i++) {
         document.getElementById("column" + i).addEventListener("click",clickHandlerCards);
     }
-    document.getElementById("redo").addEventListener("click", clickHandlerRedo);
     // document.getElementById("heart_back").lastElementChild.addEventListener("click",clickHandler);
     // document.getElementById("diamond_back").addEventListener("click",clickHandler);
     // document.getElementById("club_back").addEventListener("click",clickHandler);
     // document.getElementById("spade_back").addEventListener("click",clickHandler);
-    // document.getElementById("redo").addEventListener("click",clickHandler);
+    document.getElementById("redo").addEventListener("click",clickHandlerRedo);
 }
 
 //base for clicking on a card
@@ -179,7 +178,15 @@ function clickHandlerCards(){
 }
 
 function clickHandlerRedo() {
-    console.log("It was clicked");
+    let length = showStack.childNodes.length
+    for (let i = 0; i < length; i++) {
+        let lastShowStackDiv = document.getElementById("showStack").lastChild;
+        let temp = lastShowStackDiv;
+        
+        flipCard(getCardObj(lastShowStackDiv));
+        removeCard(lastShowStackDiv);
+        placeCard(getCardObj(temp), "stack");
+    }
 }
 
 //returns an array of div ids where the card can be placed. The array will be empty if the card can not be placed anywhere
