@@ -167,8 +167,6 @@ function clickHandler(){
 //     }
 // }
 
-
-
 //returns an array of div ids where the card can be placed. The array will be empty if the card can not be placed anywhere
 function whereCanPlace(card) {
     let placeArray = [];  //array of divs
@@ -276,11 +274,6 @@ function placeCard(card, locationId){
     document.getElementById(card.id).addEventListener("click",clickHandler);
 }
 
-//Takes a div and object and updates the div's objects attributes based on the parameter object's attributes
-function updateDivObj(div, object) {
-    div.firstChild.innerText =  JSON.stringify(object);
-}
-
 //removes the card div given a card object
 function removeCard(cardDiv) {
     document.getElementById(cardDiv.id).remove();
@@ -296,6 +289,11 @@ function flipCard(card) {
     card.flip();
     document.getElementById(card.id).lastChild.src = card.link;
     updateDivObj(document.getElementById(card.id), card);
+}
+
+//Takes a div and object and updates the div's objects attributes based on the parameter object's attributes
+function updateDivObj(div, object) {
+    div.firstChild.innerText =  JSON.stringify(object);
 }
 
  //Script for randomizing the order of any array
