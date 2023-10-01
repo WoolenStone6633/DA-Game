@@ -54,7 +54,7 @@ let initialStack = []
     for (let i = (initialStack.length -1); i >= 0; i--) {
         if (i >= 28) {
             initialStack[i].flip();
-            placeCard(initialStack[i], "stack");
+            //placeCard(initialStack[i], "stack");
         } else if (i == 27) {
             placeCard(initialStack[i], "column0");
         } else if (i >= 25) {
