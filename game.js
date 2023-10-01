@@ -200,8 +200,8 @@ function whereCanPlace(card) {
 
         if (columnCard != null && canPlaceColumn(card, getCardObj(columnCard))) //for regular cards
             placeArray.push(columnCard.id);
-        else if (columnCard == null && card == 13) {  //for kings
-            placeArray.push(getElementById("column" + i).id);
+        else if (columnCard == null && card.value == 13) {  //for kings
+            placeArray.push(document.getElementById("column" + i).id);
         }
     } 
     return placeArray;
