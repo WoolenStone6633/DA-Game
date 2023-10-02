@@ -94,10 +94,10 @@ let initialStack = []
     for (let i = 0; i < 7; i++) {
         document.getElementById("column" + i).addEventListener("click",clickHandlerCards);
     }
-    // document.getElementById("heart_back").lastElementChild.addEventListener("click",clickHandler);
-    // document.getElementById("diamond_back").addEventListener("click",clickHandler);
-    // document.getElementById("club_back").addEventListener("click",clickHandler);
-    // document.getElementById("spade_back").addEventListener("click",clickHandler);
+    document.getElementById("heart_back").lastElementChild.addEventListener("click", clickHandlerCards);
+    document.getElementById("diamond_back").addEventListener("click", clickHandlerCards);
+    document.getElementById("club_back").addEventListener("click", clickHandlerCards);
+    document.getElementById("spade_back").addEventListener("click", clickHandlerCards);
     document.getElementById("redo").addEventListener("click",clickHandlerRedo);
 }
 
@@ -139,7 +139,7 @@ function clickHandlerCards(){
                 //declarations of temp and capsule variables and select target desination
                 let temp = movingDiv
                 moveFrom = movingDiv.parentNode.id;
-                if (this.id.substring(0,6) != "column" && this.classList != "foundation") { /*If the column is not clicked or the foundation is not clicked*/ 
+                if (this.id.substring(0,6) != "column" && this.classList != "foundation highlight") { /*If the column is not clicked or the foundation is not clicked*/ 
                     destination = this.parentNode.id;
                 } else {
                     destination = this.id;
@@ -155,8 +155,9 @@ function clickHandlerCards(){
                     removeCard(movingDiv);
                     if (destination.substring(0,6) == "column") {
                         addToColumn(getCardObj(temp), destination);
-                    } else if (desination == "foundation") {
-                        console.log("There was an error somehow");
+                    } else if (this.classList.value == "foundation highlight") {
+                        console.log(destination, destination.classList);
+                        placeCard(getCardObj(temp), destination);
                     }
                 } else {  //moves all the cards on top of the specific card you're moving
                     if (movingDiv.previousSibling != undefined) {
@@ -188,8 +189,8 @@ function clickHandlerCards(){
                 }
             }
         }
-
-        if ((this.id.substring(0,6) != "column" && getCardObj(this).link != "Playing Cards/Back.png") || (getCardObj(movingDiv).value == 13 && wasNull)) {
+        console.log(this.classList.value);
+        if (((this.classList.value != "foundation highlight" && this.id.substring(0,6) != "column") && getCardObj(this).link != "Playing Cards/Back.png") || (getCardObj(movingDiv).value == 13 && wasNull)) {
             console.log("Bottom if ran");
             //highlighting where it can be placed. i have it set underneath so that it will run to clear the highlighted sections after the second click
             for (let i = 0; i < arr.length; i++) {
@@ -202,7 +203,7 @@ function clickHandlerCards(){
 }
 
 function clickHandlerRedo() {
-    let length = showStack.childNodes.length
+    let length = showStack.childNodes.length;
     for (let i = 0; i < length; i++) {
         let lastShowStackDiv = document.getElementById("showStack").lastChild;
         let temp = lastShowStackDiv;
@@ -298,6 +299,11 @@ function addToColumn(card, location) {
         placeCard(card, location);
         shiftDown(card.id, (Math.ceil(parseInt(window.getComputedStyle(document.getElementById(location).childNodes[document.getElementById(location).childNodes.length - 2])["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 10000) + shift * 100) / 100);
     }
+}
+
+function addToFoundation(card, location) {
+    let shift = 0;
+    shiftDown(card.id, (Math.ceil(parseInt(window.getComputedStyle(document.getElementById(location).childNodes[document.getElementById(location).childNodes.length - 2])["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 10000) + shift * 100) / 100);
 }
 
 //creates a div at a specified locatoin. Requires Cards object and the div id
