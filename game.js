@@ -94,10 +94,11 @@ let initialStack = []
     for (let i = 0; i < 7; i++) {
         document.getElementById("column" + i).addEventListener("click",clickHandlerCards);
     }
-    document.getElementById("heart_back").lastElementChild.addEventListener("click", clickHandlerCards);
-    document.getElementById("diamond_back").addEventListener("click", clickHandlerCards);
-    document.getElementById("club_back").addEventListener("click", clickHandlerCards);
-    document.getElementById("spade_back").addEventListener("click", clickHandlerCards);
+    console.log("handling it");
+    document.getElementById("foundation0").addEventListener("click", clickHandlerCards);
+    document.getElementById("foundation1").addEventListener("click", clickHandlerCards);
+    document.getElementById("foundation2").addEventListener("click", clickHandlerCards);
+    document.getElementById("foundation3").addEventListener("click", clickHandlerCards);
     document.getElementById("redo").addEventListener("click",clickHandlerRedo);
 }
 
@@ -156,7 +157,7 @@ function clickHandlerCards(){
                     if (destination.substring(0,6) == "column") {
                         addToColumn(getCardObj(temp), destination);
                     } else if (this.classList.value == "foundation highlight") {
-                        console.log(destination, destination.classList);
+                        console.log(destination, document.getElementById(destination).classList, this);
                         placeCard(getCardObj(temp), destination);
                     }
                 } else {  //moves all the cards on top of the specific card you're moving
@@ -219,23 +220,23 @@ function whereCanPlace(card) {
     let placeArray = [];  //array of divs
 
     //Bellow if statements are for the card foundations at the top right of the board
-    if (document.getElementById("heart_back").lastChild.id == undefined && card.id == "1_of_0") { //for aces
-        placeArray.push(document.getElementById("heart_back").id);
-    } else if (document.getElementById("diamond_back").lastChild.id == undefined && card.id == "1_of_1") {
-        placeArray.push(document.getElementById("diamond_back").id);
-    } else if (document.getElementById("club_back").lastChild.id == undefined && card.id == "1_of_2") {
-        placeArray.push(document.getElementById("club_back").id);
-    } else if (document.getElementById("spade_back").lastChild.id == undefined && card.id == "1_of_3") {
-        placeArray.push(document.getElementById("spade_back").id);
+    if (document.getElementById("foundation0").lastChild == undefined && card.id == "1_of_0") { //for aces
+        placeArray.push(document.getElementById("foundation0").id);
+    } else if (document.getElementById("foundation1").lastChild == undefined && card.id == "1_of_1") {
+        placeArray.push(document.getElementById("foundation1").id);
+    } else if (document.getElementById("foundation2").lastChild == undefined && card.id == "1_of_2") {
+        placeArray.push(document.getElementById("foundation2").id);
+    } else if (document.getElementById("foundation3").lastChild == undefined && card.id == "1_of_3") {
+        placeArray.push(document.getElementById("foundation3").id);
     }  //for the rest of the cards
-    else if (document.getElementById("heart_back").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("heart_back").lastChild))) {
-        placeArray.push(document.getElementById("heart_back").lastChild.id);
-    } else if (document.getElementById("diamond_back").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("diamond_back").lastChild))) {
-        placeArray.push(document.getElementById("diamond_back").lastChild.id);
-    } else if (document.getElementById("club_back").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("club_back").lastChild))) {
-        placeArray.push(document.getElementById("club_back").lastChild.id);
-    } else if (document.getElementById("spade_back").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("spade_back").lastChild))) {
-        placeArray.push(document.getElementById("spade_back").lastChild.id);
+    else if (document.getElementById("foundation0").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("foundation0").lastChild))) {
+        placeArray.push(document.getElementById("foundation0").lastChild.id);
+    } else if (document.getElementById("foundation1").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("foundation1").lastChild))) {
+        placeArray.push(document.getElementById("foundation1").lastChild.id);
+    } else if (document.getElementById("foundation2").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("foundation2").lastChild))) {
+        placeArray.push(document.getElementById("foundation2").lastChild.id);
+    } else if (document.getElementById("foundation3").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("foundation3").lastChild))) {
+        placeArray.push(document.getElementById("foundation3").lastChild.id);
     } 
     
     //This one is for the columns and kings
@@ -301,10 +302,6 @@ function addToColumn(card, location) {
     }
 }
 
-function addToFoundation(card, location) {
-    let shift = 0;
-    shiftDown(card.id, (Math.ceil(parseInt(window.getComputedStyle(document.getElementById(location).childNodes[document.getElementById(location).childNodes.length - 2])["top"])/parseInt(window.getComputedStyle(document.getElementById("board"))["height"]) * 10000) + shift * 100) / 100);
-}
 
 //creates a div at a specified locatoin. Requires Cards object and the div id
 function placeCard(card, locationId){
