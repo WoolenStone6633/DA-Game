@@ -6,10 +6,14 @@
         #game_board {position:absolute; left:11%;  width:75%;}
         #board {position:relative; width:100%; z-index:-2}
         #redo {position: absolute; opacity:0.9; left:1.7%; top:1%; width:10%;}
-        #heart_back {position:absolute; opacity:0.7; left:56%; top:0%; width:10%;}
-        #diamond_back {position:absolute; opacity:0.7; left:67%; top:0%; width:10%;}
-        #club_back {position:absolute; opacity:0.7; left:78%; top:0%; width:10%;}
-        #spade_back {position:absolute; opacity:0.7; left:89%; top:0%; width:10%;}
+        #heart_back {position:absolute; opacity:0.7; left:56%; top:0%; width:10%; z-index: -1}
+        #diamond_back {position:absolute; opacity:0.7; left:67%; top:0%; width:10%; z-index: -1}
+        #club_back {position:absolute; opacity:0.7; left:78%; top:0%; width:10%; z-index: -1}
+        #spade_back {position:absolute; opacity:0.7; left:89%; top:0%; width:10%; z-index: -1}
+        #heartStack {position:absolute; left:56%; width:10%}
+        #diamondStack {position:absolute; left:67%; width:10%}
+        #clubStack {position:absolute; left:78%; width:10%}
+        #spadeStack {position:absolute; left:89%; width:10%}
         #stack {position:absolute; left:1.5%; top:0%; width:10.4%;}
         #showStack {position:absolute; left:16%; top:0%; width:10.4%;}
         #column0 {position:absolute; left:3%; top:25%; width:10.4%; height: 100%}
@@ -20,6 +24,7 @@
         #column5 {position:absolute; left:73%; top:25%; width:10.4%; height: 100%}
         #column6 {position:absolute; left:87%; top:25%; width:10.4%; height: 100%}
         .card {position:absolute; width:100%; z-index:0}
+        .foundation {position:absolute; left:1.5%; top:0.5%; width:10.4%; height:20%; z-index:0}
         .highlight{border:5px; border-style:solid; border-color: white;}
         </style>
         <script src="game.js"></script>
@@ -32,20 +37,24 @@
             <div id="redo">
                 <img src="Board assets/Screenshot 2023-09-25 192652.png" alt="felt table" width="100%">
             </div>
-            <div id="club_back" class="foundation">
+            <div id="club_back">
                 <img src="Board assets/Club_Back.png" width="100%">
             </div>
-            <div id="spade_back" class="foundation">
+            <div id="spade_back">
                 <img src="Board assets/Spade_Back.png" width="100%">
             </div>
-            <div id="heart_back" class="foundation">
+            <div id="heart_back">
                 <img src="Board assets/Heart_Back.png" width="100%">
             </div>
-            <div id="diamond_back" class="foundation">
+            <div id="diamond_back">
                 <img src="Board assets/Diamond_Back.png" width="100%">
             </div>
             <div id="stack"></div>
             <div id="showStack"></div>
+            <div id="heartStack" class="foundation"></div>
+            <div id="diamondStack" class="foundation"></div>
+            <div id="clubStack" class="foundation"></div>
+            <div id="spadeStack" class="foundation"></div>
             <div id="column0"></div>
             <div id="column1"></div>
             <div id="column2"></div>

@@ -49,7 +49,7 @@ let initialStack = []
         }
     }
     //Randomizes the order of the cards
-    randomizer(initialStack);
+    //randomizer(initialStack);
     //Places the cards on the board in their correct initial spot
     for (let i = (initialStack.length -1); i >= 0; i--) {
         if (i >= 28) {
@@ -94,10 +94,10 @@ let initialStack = []
     for (let i = 0; i < 7; i++) {
         document.getElementById("column" + i).addEventListener("click",clickHandlerCards);
     }
-    document.getElementById("heart_back").addEventListener("click",clickHandlerCards);
-    document.getElementById("diamond_back").addEventListener("click",clickHandlerCards);
-    document.getElementById("club_back").addEventListener("click",clickHandlerCards);
-    document.getElementById("spade_back").addEventListener("click",clickHandlerCards);
+    document.getElementById("heartStack").addEventListener("click",clickHandlerCards);
+    document.getElementById("diamondStack").addEventListener("click",clickHandlerCards);
+    document.getElementById("clubStack").addEventListener("click",clickHandlerCards);
+    document.getElementById("spadeStack").addEventListener("click",clickHandlerCards);
     document.getElementById("redo").addEventListener("click",clickHandlerRedo);
 }
 
@@ -116,7 +116,6 @@ function clickHandlerCards(){
         placeCard(getCardObj(temp), "showStack");
     } else {
         if(!firstClickFlag){//sets movingDiv and the first click flag, checking takes place after the else condiditon
-            console.log("Before if statement ran");
             if (this.id.substring(0,6) != "column" && this.classList[0] != "foundation" && this.lastChild.src != "Playing Cards/Back.png") {
                 console.log("if statement ran");
                 movingDiv = this;
@@ -146,7 +145,7 @@ function clickHandlerCards(){
                 } else {
                     destination = this.id;
                 }
-                
+
                 //Checks to see if the legal move was an empty column
                 if (this.lastChild == null) {
                     wasNull = true;
@@ -157,8 +156,10 @@ function clickHandlerCards(){
                     removeCard(movingDiv);
                     if (destination.substring(0,6) == "column") {
                         addToColumn(getCardObj(temp), destination);
-                    } else if (desination == "foundation") {
-                        console.log("There was an error somehow");
+                    } else if (this.classList[0] == "foundation") {
+                        placeCard(getCardObj(temp), destination);
+                    } else if (this.parentNode.classList[0] == "foundation") {
+                         placeCard(getCardObj(temp), destination)
                     }
                 } else {  //moves all the cards on top of the specific card you're moving
                     if (movingDiv.previousSibling != undefined) {
@@ -195,8 +196,7 @@ function clickHandlerCards(){
             }
         }
 
-        //console.log(this.parentNode.classList.value);
-        if (movingDiv != null && ((this.id.substring(0,6) != "column" && getCardObj(this).link != "Playing Cards/Back.png") || (getCardObj(movingDiv).value == 13 && wasNull))) {
+        if (movingDiv != null && ((this.id.substring(0,6) != "column" && this.classList[0] != "foundation" && getCardObj(this).link != "Playing Cards/Back.png") || (getCardObj(movingDiv).value == 13 && wasNull) || (getCardObj(movingDiv).value == 1) && this.classList[0] == "foundation")) {
             console.log("Bottom if ran");
             //highlighting where it can be placed. i have it set underneath so that it will run to clear the highlighted sections after the second click
             for (let i = 0; i < arr.length; i++) {
@@ -225,23 +225,23 @@ function whereCanPlace(card) {
     let placeArray = [];  //array of divs
 
     //Bellow if statements are for the card foundations at the top right of the board
-    if (document.getElementById("heart_back").lastChild.id == undefined && card.id == "1_of_0") { //for aces
-        placeArray.push(document.getElementById("heart_back").id);
-    } else if (document.getElementById("diamond_back").lastChild.id == undefined && card.id == "1_of_1") {
-        placeArray.push(document.getElementById("diamond_back").id);
-    } else if (document.getElementById("club_back").lastChild.id == undefined && card.id == "1_of_2") {
-        placeArray.push(document.getElementById("club_back").id);
-    } else if (document.getElementById("spade_back").lastChild.id == undefined && card.id == "1_of_3") {
-        placeArray.push(document.getElementById("spade_back").id);
+    if (document.getElementById("heartStack").lastChild == undefined && card.id == "1_of_0") { //for aces
+        placeArray.push(document.getElementById("heartStack").id);
+    } else if (document.getElementById("diamondStack").lastChild == undefined && card.id == "1_of_1") {
+        placeArray.push(document.getElementById("diamondStack").id);
+    } else if (document.getElementById("clubStack").lastChild == undefined && card.id == "1_of_2") {
+        placeArray.push(document.getElementById("clubStack").id);
+    } else if (document.getElementById("spadeStack").lastChild == undefined && card.id == "1_of_3") {
+        placeArray.push(document.getElementById("spadeStack").id);
     }  //for the rest of the cards
-    else if (document.getElementById("heart_back").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("heart_back").lastChild))) {
-        placeArray.push(document.getElementById("heart_back").lastChild.id);
-    } else if (document.getElementById("diamond_back").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("diamond_back").lastChild))) {
-        placeArray.push(document.getElementById("diamond_back").lastChild.id);
-    } else if (document.getElementById("club_back").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("club_back").lastChild))) {
-        placeArray.push(document.getElementById("club_back").lastChild.id);
-    } else if (document.getElementById("spade_back").lastChild.id != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("spade_back").lastChild))) {
-        placeArray.push(document.getElementById("spade_back").lastChild.id);
+    else if (document.getElementById("heartStack").lastChild != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("heartStack").lastChild))) {
+        placeArray.push(document.getElementById("heartStack").lastChild.id);
+    } else if (document.getElementById("diamondStack").lastChild != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("diamondStack").lastChild))) {
+        placeArray.push(document.getElementById("diamondStack").lastChild.id);
+    } else if (document.getElementById("clubStack").lastChild != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("clubStack").lastChild))) {
+        placeArray.push(document.getElementById("clubStack").lastChild.id);
+    } else if (document.getElementById("spadeStack").lastChild != undefined && canPlaceFoundation(card, getCardObj(document.getElementById("spadeStack").lastChild))) {
+        placeArray.push(document.getElementById("spadeStack").lastChild.id);
     } 
     
     //This one is for the columns and kings
@@ -358,14 +358,15 @@ function randomizer(array){
 }
 
 function getWon() {
-    let heartLen = document.getElementById("heart_back").childNodes.length - 3
-    let diamondLen = document.getElementById("diamond_back").childNodes.length - 3
-    let clubLen = document.getElementById("club_back").childNodes.length - 3
-    let spadeLen = document.getElementById("spade_back").childNodes.length - 3
-
-    if (heartLen == 13 && diamondLen == 13 && clubLen == 13 && spadeLen == 13) {
-        return true;
-    } else {
-        return false;
+    if (document.getElementById("heartStack").lastChild != null && document.getElementById("diamondStack").lastChild != null && document.getElementById("clubStack").lastChild != null && document.getElementById("spadeStack").lastChild != null) {
+        let heartKing = getCardObj(document.getElementById("heartStack").lastChild).value;
+        let diamondKing = getCardObj(document.getElementById("diamondStack").lastChild).value;
+        let clubKing = getCardObj(document.getElementById("clubStack").lastChild).value;
+        let spadeKing = getCardObj(document.getElementById("spadeStack").lastChild).value;
+        if (heartKing == 13 && diamondKing == 13 && clubKing == 13 && spadeKing == 13) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
