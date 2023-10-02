@@ -109,11 +109,13 @@ function clickHandlerCards(){
     let arr;
     let wasNull;
     if (this.parentNode.id == "stack") {
-        let temp = this;
-        
-        flipCard(getCardObj(this));
-        removeCard(this);
-        placeCard(getCardObj(temp), "showStack");
+        if(!firstClickFlag){
+            let temp = this;
+            
+            flipCard(getCardObj(this));
+            removeCard(this);
+            placeCard(getCardObj(temp), "showStack");
+        }
     } else {
         if(!firstClickFlag){//sets movingDiv and the first click flag, checking takes place after the else condiditon
             if (this.id.substring(0,6) != "column" && this.classList[0] != "foundation" && this.lastChild.src != "Playing Cards/Back.png") {
@@ -211,14 +213,16 @@ function clickHandlerCards(){
 }
 
 function clickHandlerRedo() {
-    let length = showStack.childNodes.length
-    for (let i = 0; i < length; i++) {
-        let lastShowStackDiv = document.getElementById("showStack").lastChild;
-        let temp = lastShowStackDiv;
-        
-        flipCard(getCardObj(lastShowStackDiv));
-        removeCard(lastShowStackDiv);
-        placeCard(getCardObj(temp), "stack");
+    if(!firstClickFlag){
+        let length = showStack.childNodes.length
+        for (let i = 0; i < length; i++) {
+            let lastShowStackDiv = document.getElementById("showStack").lastChild;
+            let temp = lastShowStackDiv;
+            
+            flipCard(getCardObj(lastShowStackDiv));
+            removeCard(lastShowStackDiv);
+            placeCard(getCardObj(temp), "stack");
+        }
     }
 }
 
