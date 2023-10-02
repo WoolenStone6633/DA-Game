@@ -49,7 +49,7 @@ let initialStack = []
         }
     }
     //Randomizes the order of the cards
-    //randomizer(initialStack);
+    randomizer(initialStack);
     //Places the cards on the board in their correct initial spot
     for (let i = (initialStack.length -1); i >= 0; i--) {
         if (i >= 28) {
