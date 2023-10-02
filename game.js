@@ -162,19 +162,21 @@ function clickHandlerCards(){
                          placeCard(getCardObj(temp), destination)
                     }
                 } else {  //moves all the cards on top of the specific card you're moving
-                    if (movingDiv.previousSibling != undefined) {
-                        let previousSib = movingDiv.previousSibling;
-                        while (previousSib.nextSibling != null) {
-                            let tempSib = previousSib.nextSibling;
-                            removeCard(previousSib.nextSibling);
-                            addToColumn(getCardObj(tempSib), destination);
-                        }
-                    } else {
-                        let parentDiv = movingDiv.parentNode;
-                        while (parentDiv.firstChild != null) {
-                            let tempChild = parentDiv.firstChild;
-                            removeCard(parentDiv.firstChild);
-                            addToColumn(getCardObj(tempChild), destination);
+                    if (this.parentNode.classList[0] != "foundation") {
+                        if (movingDiv.previousSibling != undefined) {
+                            let previousSib = movingDiv.previousSibling;
+                            while (previousSib.nextSibling != null) {
+                                let tempSib = previousSib.nextSibling;
+                                removeCard(previousSib.nextSibling);
+                                addToColumn(getCardObj(tempSib), destination);
+                            }
+                        } else {
+                            let parentDiv = movingDiv.parentNode;
+                            while (parentDiv.firstChild != null) {
+                                let tempChild = parentDiv.firstChild;
+                                removeCard(parentDiv.firstChild);
+                                addToColumn(getCardObj(tempChild), destination);
+                            }
                         }
                     }
                 }
