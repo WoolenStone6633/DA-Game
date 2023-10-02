@@ -94,10 +94,10 @@ let initialStack = []
     for (let i = 0; i < 7; i++) {
         document.getElementById("column" + i).addEventListener("click",clickHandlerCards);
     }
-    document.getElementById("heart_back").lastElementChild.addEventListener("click",clickHandlerCards);
-    document.getElementById("diamond_back").lastElementChild.addEventListener("click",clickHandlerCards);
-    document.getElementById("club_back").lastElementChild.addEventListener("click",clickHandlerCards);
-    document.getElementById("spade_back").lastElementChild.addEventListener("click",clickHandlerCards);
+    document.getElementById("heart_back").addEventListener("click",clickHandlerCards);
+    document.getElementById("diamond_back").addEventListener("click",clickHandlerCards);
+    document.getElementById("club_back").addEventListener("click",clickHandlerCards);
+    document.getElementById("spade_back").addEventListener("click",clickHandlerCards);
     document.getElementById("redo").addEventListener("click",clickHandlerRedo);
 }
 
@@ -117,7 +117,7 @@ function clickHandlerCards(){
     } else {
         if(!firstClickFlag){//sets movingDiv and the first click flag, checking takes place after the else condiditon
             console.log("Before if statement ran");
-            if (this.id.substring(0,6) != "column" && this.parentNode.classList.value != "foundation" && this.lastChild.src != "Playing Cards/Back.png") {
+            if (this.id.substring(0,6) != "column" && this.classList[0] != "foundation" && this.lastChild.src != "Playing Cards/Back.png") {
                 console.log("if statement ran");
                 movingDiv = this;
                 arr = whereCanPlace(getCardObj(movingDiv));
@@ -135,12 +135,13 @@ function clickHandlerCards(){
                     legal = true;
                 }
             }
+
             if(legal){//only moves the card if the moving target is legal
 
                 //declarations of temp and capsule variables and select target desination
                 let temp = movingDiv
                 moveFrom = movingDiv.parentNode.id;
-                if (this.id.substring(0,6) != "column" && this.classList.value != "foundation") { /*If the column is not clicked or the foundation is not clicked*/ 
+                if (this.id.substring(0,6) != "column" && this.classList[0] != "foundation") { /*If the column is not clicked or the foundation is not clicked*/ 
                     destination = this.parentNode.id;
                 } else {
                     destination = this.id;
