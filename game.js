@@ -94,10 +94,10 @@ let initialStack = []
     for (let i = 0; i < 7; i++) {
         document.getElementById("column" + i).addEventListener("click",clickHandlerCards);
     }
-    // document.getElementById("heart_back").lastElementChild.addEventListener("click",clickHandler);
-    // document.getElementById("diamond_back").addEventListener("click",clickHandler);
-    // document.getElementById("club_back").addEventListener("click",clickHandler);
-    // document.getElementById("spade_back").addEventListener("click",clickHandler);
+    document.getElementById("heart_back").lastElementChild.addEventListener("click",clickHandlerCards);
+    document.getElementById("diamond_back").lastElementChild.addEventListener("click",clickHandlerCards);
+    document.getElementById("club_back").lastElementChild.addEventListener("click",clickHandlerCards);
+    document.getElementById("spade_back").lastElementChild.addEventListener("click",clickHandlerCards);
     document.getElementById("redo").addEventListener("click",clickHandlerRedo);
 }
 
@@ -116,7 +116,8 @@ function clickHandlerCards(){
         placeCard(getCardObj(temp), "showStack");
     } else {
         if(!firstClickFlag){//sets movingDiv and the first click flag, checking takes place after the else condiditon
-            if (this.id.substring(0,6) != "column" && this.lastChild.src != "Playing Cards/Back.png") {
+            console.log("Before if statement ran");
+            if (this.id.substring(0,6) != "column" && this.parentNode.classList.value != "foundation" && this.lastChild.src != "Playing Cards/Back.png") {
                 console.log("if statement ran");
                 movingDiv = this;
                 arr = whereCanPlace(getCardObj(movingDiv));
@@ -139,7 +140,7 @@ function clickHandlerCards(){
                 //declarations of temp and capsule variables and select target desination
                 let temp = movingDiv
                 moveFrom = movingDiv.parentNode.id;
-                if (this.id.substring(0,6) != "column" && this.classList != "foundation") { /*If the column is not clicked or the foundation is not clicked*/ 
+                if (this.id.substring(0,6) != "column" && this.classList.value != "foundation") { /*If the column is not clicked or the foundation is not clicked*/ 
                     destination = this.parentNode.id;
                 } else {
                     destination = this.id;
@@ -193,7 +194,8 @@ function clickHandlerCards(){
             }
         }
 
-        if ((this.id.substring(0,6) != "column" && getCardObj(this).link != "Playing Cards/Back.png") || (getCardObj(movingDiv).value == 13 && wasNull)) {
+        //console.log(this.parentNode.classList.value);
+        if (movingDiv != null && ((this.id.substring(0,6) != "column" && getCardObj(this).link != "Playing Cards/Back.png") || (getCardObj(movingDiv).value == 13 && wasNull))) {
             console.log("Bottom if ran");
             //highlighting where it can be placed. i have it set underneath so that it will run to clear the highlighted sections after the second click
             for (let i = 0; i < arr.length; i++) {
