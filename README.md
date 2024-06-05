@@ -1,6 +1,6 @@
 # Solitaire
 
-$\color{blue}Check \ the \ deployment \ section \ for \ the \ link$
+Check it out here: https://woolenstone6633.github.io/Solitaire/
 
 - Working solitaire game made for the web browser
 - Features basic solitaire functions and game rules
